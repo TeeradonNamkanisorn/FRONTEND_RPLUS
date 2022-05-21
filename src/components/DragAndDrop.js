@@ -80,7 +80,7 @@ function DragAndDrop(props) {
   return (
     <label ref={dropRef} htmlFor={props.for} style={{
         border: dragging? "4px solid grey" : "4px dashed grey"
-    }} className="dragAndDropContent file-dnd">
+    }} className="dragAndDropContent">
         {dragging &&
             <div 
               style={{
