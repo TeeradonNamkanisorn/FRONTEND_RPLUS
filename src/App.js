@@ -13,7 +13,9 @@ function App() {
    
     <div>
       <div className="row">
-        <div className='col-2'>Logo</div>
+        <div className='col-2'>
+          <img className='main_logo' src="./Remote_logo.png" alt="page logo"></img>
+        </div>
         <div className='col-6'>SearchBar</div>
         <div className='col-1'>Cart</div>
         <div className='col-3'>

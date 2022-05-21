@@ -5,7 +5,8 @@ export const SIGN_IN_USER = "user/sign_in"
 const initialState = {
     personal: {
         id: localStorage.getItem('userId') || "",
-        username: localStorage.getItem('username') || ""
+        username: localStorage.getItem('username') || "",
+        token: localStorage.getItem('token') || ""
     }
 }
 
@@ -14,7 +15,8 @@ const reducer = (state,action) => {
         case SIGN_IN_USER: {
             const newPersonalInfo = {
                 id: action.payload.id,
-                username: action.payload.username
+                username: action.payload.username,
+                token: action.payload.token
             };
             return {...state, personal: {...state.personal ,...newPersonalInfo}}
         }

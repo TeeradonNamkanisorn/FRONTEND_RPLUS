@@ -1,0 +1,118 @@
+
+/* Reusables */
+.w_80 {
+    width: 80%;
+}
+
+
+
+.main_logo {
+    width: 150px;
+    height: 150px;
+}
+
+
+/* Dropdown Menu*/
+.menu-container {
+    position: relative;
+  }
+  .menu {
+    background: #ffffff;
+    border-radius: 8px;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 300px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+  }
+  
+  .menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu li {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .menu li a {
+    text-decoration: none;
+    color: #333333;
+    padding: 15px 20px;
+    display: block;
+  }
+
+  .menu-trigger {
+    background: #ffffff;
+    border-radius: 90px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border: none;
+    vertical-align: middle;
+    transition: box-shadow 0.4s ease;
+  }
+  
+  .menu-trigger:hover {
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .menu-trigger span {
+    font-weight: 700;
+    vertical-align: middle;
+    font-size: 14px;
+    margin: 0 10px;
+  }
+  
+  .menu-trigger img {
+    border-radius: 90px;
+  }
+
+
+  /* Teacher Home Page */
+  .dragAndDropContainer {
+    position: relative;
+    height:  500px;
+  }
+  .dragAndDropContent {
+      display: block;
+      margin: 0 auto;
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+  }
+
+  .vid-input-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(6, 1fr)
+  }
+
+  .vid-input-label {
+      grid-area: 1/1/2/4
+  }
+
+  .file-name {
+    grid-row: 1/2;
+    grid-column: 4/8;
+  }
+
+  /* DragAndDrop content*/
+  .file-dnd {
+    grid-row: 2/7;
+    grid-column: 1/7;
+  }
