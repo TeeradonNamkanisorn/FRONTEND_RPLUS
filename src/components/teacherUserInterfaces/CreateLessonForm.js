@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import bytesToSize from '../utils/bytesToSize';
+import bytesToSize from '../../utils/bytesToSize';
 import DragAndDrop from './DragAndDrop';
 
 function CreateLessonForm() {
@@ -18,8 +18,8 @@ function CreateLessonForm() {
   return (
     <div>
         <form className='text-center' onSubmit={handleSubmit}>
-            <div className='form-group lesson-name-input-container my-3'>
-                <label htmlFor='lessonName' className=' col-form-label lesson-name-input-label'>Lesson Name</label>
+            <div className='lesson-name-input-container my-3'>
+                <label htmlFor='lessonName' className='lesson-name-input-label'>Lesson Name</label>
                 <input className='form-control lesson-name-input' id="lessonName" onChange={e=>setLessonName(e.target.value)}></input>
          
                 <div className='invalid-feedback'>Validation Error</div>

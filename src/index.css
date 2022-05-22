@@ -2,6 +2,9 @@
   box-sizing: border-box;
 }
 /* Reusables */
+.w_50 {
+  width: 50%
+}
 .w_80 {
     width: 80%;
 }
@@ -14,9 +17,8 @@
   margin: 0 150px;
 }
 
-.d_grid_12 {
+.d_grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
 }
 
 
@@ -97,6 +99,19 @@
   .menu-trigger img {
     border-radius: 90px;
   }
+
+
+  
+
+
+
+
+
+
+
+
+
+
 
 
   /* Teacher Home Page */

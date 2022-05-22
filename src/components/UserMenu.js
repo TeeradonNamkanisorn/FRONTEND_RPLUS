@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { userInfoCtx } from '../contexts/userInfoCtx'
-
+import { useDispatch, useSelector } from 'react-redux';
 function UserMenu() {
-    const {state, dispatch} = useContext(userInfoCtx);
     const dropdownRef = useRef(null);
     const [isActive, setIsActive] = useState(false);
     const toggleActive = () => {
         setIsActive(!isActive);
     };
+    const {info: {username}, isLoggedIn} = useSelector(state => state.userInfo);
+
     const handleClickOutside = (e) => {
         if (!dropdownRef.current.contains(e.target) && dropdownRef.current !== null) {
             setIsActive(false);
@@ -25,7 +25,7 @@ function UserMenu() {
             window.removeEventListener("click", handleClickOutside);
         }
     },[isActive])
-    const username = state.personal.username;
+
   return (
     <div>
         <div className="menu-container">
@@ -35,7 +35,7 @@ function UserMenu() {
       </button>
       <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
         <ul>
-          <li>{state.personal? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>}</li>
+          <li>{isLoggedIn? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>}</li>
           <li><a href="/trips">Trips</a></li>
           <li><a href="/saved">Saved</a></li>
         </ul>

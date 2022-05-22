@@ -53,12 +53,6 @@ export default function RegisterTeacher() {
         }
 
         const result = await axios.post("http://localhost:4000/teacher/", requestBody);
-        localStorage.setItem("username", result.data.username);
-        localStorage.setItem("email", result.data.email);
-        localStorage.setItem("userId", result.data.id);
-        const signin_action = {type: SIGN_IN_USER, payload:{username: result.data.username, id: result.data.id}}
-        console.log(result.data);
-        dispatch(signin_action);
         navigate('/');
        } catch(err) {
            console.log(err?.response?.data?.message || err);
@@ -94,7 +88,7 @@ export default function RegisterTeacher() {
         </div>
 
         <div className="form-group row my-3">
-            <label className="" htmlFor="passowordInput">Password</label>
+            <label className="" htmlFor="passwordInput">Password</label>
             <input className={`form-control ${passwordError? "is-invalid" : ""}`} type="password"  id="passwordInput"  placeholder="Enter password" onChange={handlePasswordChange}/>
             <div className="invalid-feedback">{passwordError}</div>
         </div>
