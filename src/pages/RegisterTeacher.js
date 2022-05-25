@@ -1,11 +1,9 @@
 import axios from "axios";
 import {useEffect, useState, useReducer, useContext} from "react";
 import { useNavigate } from "react-router-dom";
-import { SIGN_IN_USER, userInfoCtx } from "../contexts/userInfoCtx";
 import { isEmail } from "../utils/validateFunctions";
 export default function RegisterTeacher() {
     const navigate = useNavigate();
-    const {state, dispatch} = useContext(userInfoCtx);
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [emailError, setEmailError] = useState("");
