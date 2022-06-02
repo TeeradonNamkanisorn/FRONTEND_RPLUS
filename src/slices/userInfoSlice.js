@@ -40,7 +40,14 @@ const loginUser = createAsyncThunk("userInfo/login", async (body) => {
 const userInfoSlice = createSlice({
     name: "userInfo",
     initialState: USER_INFO_INITIAL_STATE,
-    reducers: {},
+    reducers: {
+        logout: (state, action) => {
+            state = USER_INFO_INITIAL_STATE;
+            console.log("logout");
+            localStorage.clear();
+            return state
+        }
+    },
     extraReducers: builder => {
         builder.addCase(initUser.fulfilled, (state, {payload: {username, email, userId, role}}) => {
             state.info = {username, email, id:userId, role};
@@ -67,9 +74,9 @@ const userInfoSlice = createSlice({
     }
 });
 
+const {logout} = userInfoSlice.actions;
 
-
-export {initUser, loginUser} ;
+export {initUser, loginUser, logout} ;
 
 export default userInfoSlice.reducer;
 

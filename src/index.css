@@ -2,16 +2,6 @@
   box-sizing: border-box;
 }
 /* Reusables */
-.w_50 {
-  width: 50%
-}
-.w_80 {
-    width: 80%;
-}
-
-.w_100 {
-  width: 100%;
-}
 
 .m150 {
   margin: 0 150px;
@@ -21,184 +11,165 @@
   display: grid;
 }
 
-
-
-
 .main_logo {
-    width: 150px;
-    height: 150px;
+  width: 150px;
+  height: 150px;
 }
-
 
 /* Dropdown Menu*/
 .menu-container {
-    position: relative;
-  }
-  .menu {
-    background: #ffffff;
-    border-radius: 8px;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 300px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-  }
-  
-  .menu.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-  
-  .menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .menu li {
-    border-bottom: 1px solid #dddddd;
-  }
-  
-  .menu li a {
-    text-decoration: none;
-    color: #333333;
-    padding: 15px 20px;
-    display: block;
-  }
+  position: relative;
+}
+.menu {
+  background: #ffffff;
+  border-radius: 8px;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 300px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
 
-  .menu-trigger {
-    background: #ffffff;
-    border-radius: 90px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4px 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    border: none;
-    vertical-align: middle;
-    transition: box-shadow 0.4s ease;
-  }
-  
-  .menu-trigger:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .menu-trigger span {
-    font-weight: 700;
-    vertical-align: middle;
-    font-size: 14px;
-    margin: 0 10px;
-  }
-  
-  .menu-trigger img {
-    border-radius: 90px;
-  }
+.menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-  
+.menu li {
+  border-bottom: 1px solid #dddddd;
+}
 
+.menu li a {
+  text-decoration: none;
+  color: #333333;
+  padding: 15px 20px;
+  display: block;
+}
 
+.menu-trigger {
+  background: #ffffff;
+  border-radius: 90px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border: none;
+  vertical-align: middle;
+  transition: box-shadow 0.4s ease;
+}
 
+.menu-trigger:hover {
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
 
+.menu-trigger span {
+  font-weight: 700;
+  vertical-align: middle;
+  font-size: 14px;
+  margin: 0 10px;
+}
 
+.menu-trigger img {
+  border-radius: 90px;
+}
 
+/* Teacher Home Page */
+/* Lesson Name Input */
 
+.lesson-name-input-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.lesson-name-input-label {
+  grid-column: 2/4;
+  grid-row: 1/2;
+  justify-self: flex-start;
+}
+.lesson-name-input {
+  grid-column: 4/10;
+  grid-row: 1/2;
+}
+/* Lesson Descripton input */
+.lesson-description-input-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.lesson-description-input-label {
+  grid-column: 2/4;
+  grid-row: 1/2;
+  justify-self: flex-start;
+}
+.lesson-description-input {
+  grid-column: 4/10;
+  grid-row: 1/2;
+  overflow: scroll;
+}
 
+/*Lesson Type Input*/
+.lesson-type-input-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.lesson-type-input-label {
+  grid-column: 2/3;
+  justify-self: flex-start;
+}
+.lesson-type-input {
+  grid-column: 4/5;
+}
 
+/* Video Input */
+.dragAndDropContainer {
+  position: relative;
+  height: 350px;
+}
+.dragAndDropContent {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
 
+.vid-input-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 100px);
+}
 
+.vid-input-label {
+  grid-area: 1/2/2/4;
+  justify-self: flex-start;
+}
 
-  /* Teacher Home Page */
-  /* Lesson Name Input */
+.file-name-label {
+  grid-row: 1/2;
+  grid-column: 5/9;
+  align-self: flex-end;
+  justify-self: center;
+}
 
-  .lesson-name-input-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-  }
-  .lesson-name-input-label {
-    grid-column: 2/4;
-    grid-row: 1/2;
-    justify-self: flex-start;
-  }
-  .lesson-name-input {
-    grid-column: 4/10;
-    grid-row: 1/2;
-  }
-  /* Lesson Descripton input */
-  .lesson-description-input-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-  }
-  .lesson-description-input-label {
-    grid-column: 2/4;
-    grid-row: 1/2;
-    justify-self: flex-start;
-  }
-  .lesson-description-input {
-    grid-column: 4/10;
-    grid-row: 1/2;
-    overflow: scroll;
-  }
+.dragAndDropContainer {
+  grid-row: 2/7;
+  grid-column: 4/10;
+}
 
-  /*Lesson Type Input*/
-  .lesson-type-input-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-  }
-  .lesson-type-input-label{
-    grid-column: 2/3;
-    justify-self: flex-start;
-  }
-  .lesson-type-input {
-    grid-column: 4/5;
-  }
-
-
-  /* Video Input */
-  .dragAndDropContainer {
-    position: relative;
-    height:  500px;
-  }
-  .dragAndDropContent {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-      height: 100%;
-      margin: 0 auto;
-  }
-
-  .vid-input-container {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: repeat(6, 100px)
-  }
-
-  .vid-input-label {
-      grid-area: 1/2/2/4;
-      justify-self: flex-start;
-  }
-
-  .file-name-label {
-    grid-row: 1/2;
-    grid-column: 5/9;
-    align-self:flex-end;
-    justify-self: center;
-  }
-
-  .dragAndDropContainer { 
-    grid-row: 2/7;
-    grid-column: 4/10;
-  }
-
-  .file-size-label {
-    grid-row: 1/2;
-    grid-column: 10/12;
-    align-self: flex-end;
-    justify-self: center;
-  }
+.file-size-label {
+  grid-row: 1/2;
+  grid-column: 10/12;
+  align-self: flex-end;
+  justify-self: center;
+}

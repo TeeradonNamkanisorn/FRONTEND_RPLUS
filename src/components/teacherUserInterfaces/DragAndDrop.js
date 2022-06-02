@@ -58,10 +58,10 @@ function DragAndDrop(props) {
 
         return () => {
             
-            dropRef.current.removeEventListener("dragenter", handleDragIn);
-            dropRef.current.removeEventListener("dragleave", handleDragOut);
-            dropRef.current.removeEventListener("dragover", handleDrag);
-            dropRef.current.removeEventListener("drop", handleDrop);
+            // dropRef.current.removeEventListener("dragenter", handleDragIn);
+            // dropRef.current.removeEventListener("dragleave", handleDragOut);
+            // dropRef.current.removeEventListener("dragover", handleDrag);
+            // dropRef.current.removeEventListener("drop", handleDrop);
     
         }
     }, [])

@@ -1,17 +1,50 @@
+import axios from "../../../config/axios";
 import {useState} from 'react';
-import bytesToSize from '../../utils/bytesToSize';
-import DragAndDrop from './DragAndDrop';
+import bytesToSize from '../../../utils/bytesToSize';
+import DragAndDrop from '../../teacherUserInterfaces/DragAndDrop';
+import { useNavigate, useParams } from "react-router-dom";
+import { getAccessToken } from "../../../services/localStorage";
+import { setChapterLoading } from "../../../slices/chapterSlice";
+import { useDispatch } from "react-redux";
 
 function CreateLessonForm() {
-    const [content, setContent] = useState(null);
     const [contentType, setContentType] = useState("video");
     const [file, setFile] = useState(null);
     const [lessonName, setLessonName] = useState("");
     const [lessonDescription, setLessonDescription] = useState("");
+    const [videoError, setVideoError] = useState("");
+    const {courseId,chapterId} = useParams();
+    const dispatch = useDispatch();
     
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        
+        try {
+            dispatch(setChapterLoading(true));
+            if (contentType !== "video") return;
+            if (file === null) return setVideoError("lecture material is required");
+            const formData = new FormData();
+            formData.append('lessonVideo', file);
+            formData.append('title', lessonName);
+            formData.append('chapterId', chapterId);
+            formData.append('description', lessonDescription);
+            setVideoError("");
+            const res = await axios.post('/lesson/video', formData, {
+                headers: {
+                    authorization: "Bearer " + getAccessToken()
+                }
+            });
+            navigate(`/modify-course/${courseId}`)
+
+        } catch (err) {
+            console.log(err)
+        } finally {
+            dispatch(setChapterLoading(false));
+        }
+
 
     }
 
@@ -26,9 +59,10 @@ function CreateLessonForm() {
             </div>
             <div className='lesson-type-input-container'>
                 <label className='lesson-type-input-label' htmlFor="content-type">Select Lesson Type</label>
-                <select id="content-type" className='lesson-type-input' onChange={e => setContentType(e.target.value)}>
-                    <option selected={true} value="video">Video</option>
+                <select id="content-type" className='lesson-type-input' onChange={e => setContentType(e.target.value)} value={contentType}>
+                    <option value="video">Video</option>
                 </select>
+                <div className="form-text">Lesson type cannot be changed</div>
             </div>
             <div className="form-group my-3 lesson-description-input-container">
                 <label htmlFor="description" className=' my-3 lesson-description-input-label'>Lesson description</label>
@@ -50,8 +84,14 @@ function CreateLessonForm() {
                 </div>)}
             </div>
             <input type="file" id="file-upload"  onChange={(e) => setFile(e.target.files[0])} hidden/>
-            <button type='submit'>Create Lesson</button>
+            <button type='submit' className="btn btn-primary mb-5">Create Lesson</button>
         </form>
+        {/* {loading && <div className="w-25 mx-auto">
+            <div className="d-flex justify-content-between">
+                <strong>Uploading...</strong>
+                <div className="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+            </div>
+        </div>} */}
         
     </div>
   )

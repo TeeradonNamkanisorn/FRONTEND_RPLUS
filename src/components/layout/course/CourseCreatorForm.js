@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { isFileImage } from "../../utils/isFileImage";
-import { isEmpty } from "../../utils/validateFunctions";
-import { isFileVideo } from "../../utils/isFileVideo";
-import axios from "../../config/axios";
-import { getAccessToken } from "../../services/localStorage";
+import { isFileImage } from "../../../utils/isFileImage";
+import { isEmpty } from "../../../utils/validateFunctions";
+import { isFileVideo } from "../../../utils/isFileVideo";
+import axios from "../../../config/axios";
+import { getAccessToken } from "../../../services/localStorage";
 import { useNavigate } from "react-router-dom";
 
 const CourseCreatorForm = () => {
