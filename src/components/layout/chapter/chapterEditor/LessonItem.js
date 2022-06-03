@@ -4,10 +4,12 @@ import axios from "../../../../config/axios";
 import { getAccessToken } from '../../../../services/localStorage';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchChaptersAsync } from '../../../../slices/chapterSlice';
+import { fetchChaptersAsync, setChapterLoading } from '../../../../slices/chapterSlice';
+import LessonUpdater from '../../lesson/LessonUpdater';
 
 function LessonItem({lesson}) {
    const [modalShowing, setModalShowing] = useState(false);
+   const [editModalShowing, setEditModalShowing] = useState(false);
    const navigate = useNavigate();
    const { courseId } = useParams();
    const dispatch = useDispatch();
@@ -17,16 +19,17 @@ function LessonItem({lesson}) {
 
    const handleDeleteVid = async e => {
        try {
+        dispatch(setChapterLoading(true));
         await axios.delete(`/lesson/video/${lesson.id}`, {
             headers: {
                 authorization: "Bearer " + getAccessToken()
             }
         });
-
         dispatch(fetchChaptersAsync({courseId}));
-
        } catch (err) {
            console.log(err);
+       } finally {
+        dispatch(setChapterLoading(false))
        }
 
    }
@@ -35,12 +38,14 @@ function LessonItem({lesson}) {
    
   return (
     <>
-        <li className='border list-group-item d-flex justify-content-between'>
-            <p>{lesson?.lessonIndex} {lesson?.title}</p>
-            <div className="d-flex justify-items-center" style={{width: "100px", height: 40}}
+        <li className='border list-group-item d-flex justify-content-between align-items-center'>
+            <p className='d-flex align-items-center my-0'>{lesson?.lessonIndex}: {lesson?.title} 
+            <i className="fas fa-edit ms-5 fa-lg" role="button" onClick={()=>setEditModalShowing(true)}></i></p>
+            
+            <div className="d-flex align-items-center" style={{width: "100px", height: 40}}
             >
-            <i className="fa-solid fa-video fa-2x mx-3" role="button" onClick={()=> {handleModalToggle()}}></i>
-            <i className="fa-solid fa-trash-can fa-2x" role={"button"} onClick={handleDeleteVid}></i>
+            <i className="fa-solid fa-video fa-lg mx-3" role="button" onClick={()=> {handleModalToggle()}}></i>
+            <i className="fa-solid fa-trash-can fa-lg" role={"button"} onClick={handleDeleteVid}></i>
             </div>
         </li>
         <Modal showing={modalShowing} setShowing={setModalShowing} size="lg" title={lesson?.title}>
@@ -48,6 +53,9 @@ function LessonItem({lesson}) {
                 <source src={lesson.videoLesson.url}/>
                 Your browser does not support the video tag.
             </video>
+        </Modal>
+        <Modal showing={editModalShowing} setShowing={setEditModalShowing} size="lg" title={"Lesson Edit"}>
+            <LessonUpdater lesson={lesson} courseId={courseId} setShowing={setEditModalShowing}/>
         </Modal>
     </>
   )

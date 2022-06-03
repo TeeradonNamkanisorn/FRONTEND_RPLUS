@@ -131,6 +131,12 @@
   grid-column: 4/5;
 }
 
+.lesson-type-input-text {
+  grid-column: 5/7;
+  justify-self: center;
+  align-self: center;
+}
+
 /* Video Input */
 .dragAndDropContainer {
   position: relative;

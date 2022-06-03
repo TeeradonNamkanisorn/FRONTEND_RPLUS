@@ -42,8 +42,8 @@ function App() {
    
 
     </div>
-    
-    { (chaptersLoading) && <Spinner title="content"></Spinner>}
+
+    { (chaptersLoading) && <Spinner title="content"></Spinner> }
     </>
   );
 }

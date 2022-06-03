@@ -5,6 +5,7 @@ import { isFileVideo } from "../../../utils/isFileVideo";
 import axios from "../../../config/axios";
 import { getAccessToken } from "../../../services/localStorage";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const CourseCreatorForm = () => {
   const [name, setName] = useState("");
@@ -12,7 +13,7 @@ const CourseCreatorForm = () => {
   const [level, setLevel] = useState("all");
   const [imageFile, setImageFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
-
+  const [loading, isLoading] = useState(false);
   const [nameError, setNameError] = useState("");
   const [fileVideoError, setFileVideoError] = useState("");
   const [fileImageError, setFileImageError] = useState("");

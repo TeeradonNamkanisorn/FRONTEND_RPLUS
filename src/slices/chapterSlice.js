@@ -3,13 +3,12 @@ import axios from "../config/axios";
 import { getAccessToken } from "../services/localStorage";
 
 
-const INITIAL_CHAPTERS = {chapters: [], isLoading: false}
+const INITIAL_CHAPTERS = {chapters: [], isLoading: false, error: ""}
 
-const fetchChaptersAsync = createAsyncThunk('chapters/fetch', async(payload, thunkAPi) => {
+const fetchChaptersAsync = createAsyncThunk('chapters/fetch', async(payload, thunkAPI) => {
     try {
         const {courseId} = payload;
         const token = getAccessToken();
-        console.log('dispatching '+ courseId)
         const res = await axios.get('/chapter/'+courseId, {
             headers: {
                 authorization: "Bearer "+token
@@ -19,7 +18,8 @@ const fetchChaptersAsync = createAsyncThunk('chapters/fetch', async(payload, thu
         return res.data.chapters
 
     } catch (error) {
-        return thunkAPi.rejectWithValue(error?.response?.data?.message || "request error")
+        console.log('error')
+        return thunkAPI.rejectWithValue(error?.response?.data?.message || "request error")
     }
 })
 
@@ -43,7 +43,10 @@ const chapterSlice = createSlice({
             fetchChaptersAsync.pending, (state, action) => {
                 state.isLoading = true;
             }
-        )
+        ).addCase(fetchChaptersAsync.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        })
     }
 })
 

@@ -62,7 +62,7 @@ function CreateLessonForm() {
                 <select id="content-type" className='lesson-type-input' onChange={e => setContentType(e.target.value)} value={contentType}>
                     <option value="video">Video</option>
                 </select>
-                <div className="form-text">Lesson type cannot be changed</div>
+                <div className="form-text lesson-type-input-text">Lesson type cannot be changed</div>
             </div>
             <div className="form-group my-3 lesson-description-input-container">
                 <label htmlFor="description" className=' my-3 lesson-description-input-label'>Lesson description</label>
