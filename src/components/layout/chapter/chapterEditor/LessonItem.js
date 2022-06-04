@@ -4,7 +4,7 @@ import axios from "../../../../config/axios";
 import { getAccessToken } from '../../../../services/localStorage';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchChaptersAsync, setChapterLoading } from '../../../../slices/chapterSlice';
+import { fetchCourseAsync, setChapterLoading } from '../../../../slices/courseSlice';
 import LessonUpdater from '../../lesson/LessonUpdater';
 
 function LessonItem({lesson}) {
@@ -25,7 +25,7 @@ function LessonItem({lesson}) {
                 authorization: "Bearer " + getAccessToken()
             }
         });
-        dispatch(fetchChaptersAsync({courseId}));
+        dispatch(fetchCourseAsync({courseId}));
        } catch (err) {
            console.log(err);
        } finally {

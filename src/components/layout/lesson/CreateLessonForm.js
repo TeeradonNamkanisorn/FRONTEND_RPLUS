@@ -4,7 +4,7 @@ import bytesToSize from '../../../utils/bytesToSize';
 import DragAndDrop from '../../teacherUserInterfaces/DragAndDrop';
 import { useNavigate, useParams } from "react-router-dom";
 import { getAccessToken } from "../../../services/localStorage";
-import { setChapterLoading } from "../../../slices/chapterSlice";
+import { setChapterLoading } from "../../../slices/courseSlice";
 import { useDispatch } from "react-redux";
 
 function CreateLessonForm() {

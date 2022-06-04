@@ -1,7 +1,7 @@
 import React, { useId, useState } from 'react'
 import axios from "../../../config/axios";
 import { useDispatch } from 'react-redux';
-import { fetchChaptersAsync, setChapterLoading } from '../../../slices/chapterSlice';
+import { fetchCourseAsync, setChapterLoading } from '../../../slices/courseSlice';
 import { getAccessToken } from '../../../services/localStorage';
 import bytesToSize from '../../../utils/bytesToSize';
 import { isFileVideo } from '../../../utils/isFileVideo';
@@ -30,7 +30,7 @@ function LessonUpdater({lesson, courseId, setShowing}) {
                     authorization: "Bearer "+getAccessToken()
                 }
             });
-            dispatch(fetchChaptersAsync({courseId}));
+            dispatch(fetchCourseAsync({courseId}));
         } catch (error) {
             console.log("error")
         } finally {

@@ -10,7 +10,7 @@ import ChapterEditContainer from '../components/layout/chapter/chapterEditor/Cha
 import Modal from '../components/ui/Modal';
 import ChapterCreator from '../components/layout/chapter/ChapterCreator';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChaptersAsync } from '../slices/chapterSlice';
+import { fetchCourseAsync } from '../slices/courseSlice';
 import Spinner from '../components/common/Spinner';
 
 const ModifyCourse = () => {
@@ -18,8 +18,9 @@ const ModifyCourse = () => {
     // const [chapters, setChapters] = useState([]);
     const [showing, setShowing] = useState(false);
     const dispatch = useDispatch();
-    const chapters = useSelector(state => state.chapters.chapters);
-    const chaptersLoading = useSelector(state => state.chapters.isLoading);
+    const chapters = useSelector(state => state.course.chapters);
+    console.log(chapters);
+    const chaptersLoading = useSelector(state => state.course.isLoading);
     
     const navigate = useNavigate();
     const params = useParams();
@@ -38,7 +39,7 @@ const ModifyCourse = () => {
                 //     }
                 // });
                 // setChapters(res.data.chapters);
-                dispatch(fetchChaptersAsync({courseId}));
+                dispatch(fetchCourseAsync({courseId}));
             } catch (err) {
                 setApiError(err?.response?.data?.message || "chapter request error")
             }

@@ -14,7 +14,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useRef(null);
-  const chaptersLoading = useSelector(state => state.chapters.isLoading);
+  const chaptersLoading = useSelector(state => state.course.isLoading);
 
 
   const handleLogoutClick = () => {

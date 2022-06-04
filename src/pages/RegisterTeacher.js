@@ -50,7 +50,7 @@ export default function RegisterTeacher() {
             password
         }
 
-        const result = await axios.post("http://localhost:4000/teacher/", requestBody);
+        const result = await axios.post("http://localhost:4000/auth/teacher", requestBody);
         navigate('/');
        } catch(err) {
            console.log(err?.response?.data?.message || err);
