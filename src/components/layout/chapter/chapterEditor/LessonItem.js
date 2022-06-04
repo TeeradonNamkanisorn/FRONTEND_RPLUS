@@ -50,7 +50,7 @@ function LessonItem({lesson}) {
         </li>
         <Modal showing={modalShowing} setShowing={setModalShowing} size="lg" title={lesson?.title}>
             <video width="500" height="500" controls>
-                <source src={lesson.videoLesson.url}/>
+                <source src={lesson?.videoLesson?.url}/>
                 Your browser does not support the video tag.
             </video>
         </Modal>

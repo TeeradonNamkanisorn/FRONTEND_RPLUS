@@ -13,10 +13,11 @@ const USER_INFO_INITIAL_STATE  = {
     isLoading: false,
     isLoggedIn: false
 }
+
 const initUser = createAsyncThunk("userInfo/init", async (arg, thunkApi) => {
     try {
         const token = getAccessToken();
-        const res = await axios.get("/user/", {headers: {authorization: 'Bearer '+token}});
+        const res = await axios.get("/auth/", {headers: {authorization: 'Bearer '+token}});
         const {userId, email, username, role} = res.data
         return {userId, email, username, role}
     //creates three actions: fulfilled, pending, rejected
@@ -30,7 +31,7 @@ const initUser = createAsyncThunk("userInfo/init", async (arg, thunkApi) => {
 
 const loginUser = createAsyncThunk("userInfo/login", async (body) => {
     //body = {email, password}
-        const res = await axios.post("/user/login", {email: body.email, password: body.password});
+        const res = await axios.post("/auth/login", {email: body.email, password: body.password});
         const {username, userId, email, token, role} = res.data
         saveAccessToken(token);
         return {username, userId, email, role};

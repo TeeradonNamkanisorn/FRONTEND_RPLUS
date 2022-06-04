@@ -29,7 +29,7 @@ function WebRouter() {
         }
     
           const token = getAccessToken();
-          axios.get("/user/", {headers: {authorization: 'Bearer '+token}}).catch(err => console.log(err));
+          axios.get("/auth/", {headers: {authorization: 'Bearer '+token}}).catch(err => console.log(err));
           
       },[dispatch]);
 
