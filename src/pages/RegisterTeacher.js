@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { isEmail } from "../utils/validateFunctions";
 export default function RegisterTeacher() {
     const navigate = useNavigate();
+    const [firstNameError, setFirstNameError] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword]= useState("");
     const [confirmPassword, setConfrimPassword] = useState("");
@@ -25,6 +29,13 @@ export default function RegisterTeacher() {
         setUsername(e.target.value);
     }
 
+    const handleFirstNameChange = e => {
+        setFirstName(e.target.value);
+    }
+
+    const handleLastNameChange = e => {
+        setLastName(e.target.value);
+    }
     const handleEmailChange = (e) => {
         if(!isEmail(e.target.value)) {
             setEmailError("Invalid email format.");
@@ -40,14 +51,16 @@ export default function RegisterTeacher() {
         //POST request
 
        try {
-        if (passwordError || emailError || usernameError) {
+        if (passwordError || emailError || usernameError || firstNameError || lastNameError) {
             return alert("invalid input");
         }
 
         const requestBody = {
             username,
             email,
-            password
+            password,
+            firstName,
+            lastName
         }
 
         const result = await axios.post("http://localhost:4000/auth/teacher", requestBody);
@@ -75,8 +88,19 @@ export default function RegisterTeacher() {
 
         <div className="form-group row my-3">
             <label className="" htmlFor="usernameInput">Username</label>
-            <input className={`form-control ${usernameError? "is-invalid" : ""}`} type="text" id="inputUsername"  placeholder="Enter username" onChange={handleUsernameChange}/>
-            <div className="invalid-feedback">Example invalid custom select feedback</div>
+            <input className={`form-control ${usernameError? "is-invalid" : ""}`} type="text" id="usernameInput"  placeholder="Enter username" onChange={handleUsernameChange}/>
+            <div className="invalid-feedback">{usernameError}</div>
+        </div>
+
+        <div className="form-group row my-3">
+            <label className="" htmlFor="firstNameInput">First Name</label>
+            <input className={`form-control ${firstNameError? "is-invalid" : ""}`} type="text" id="firstNameInput"  placeholder="Enter first name" onChange={handleFirstNameChange}/>
+            <div className="invalid-feedback">{firstNameError}</div>
+        </div>
+        <div className="form-group row my-3">
+            <label className="" htmlFor="lastNameInput">Username</label>
+            <input className={`form-control ${lastNameError? "is-invalid" : ""}`} type="text" id="lastNameInput"  placeholder="Enter username" onChange={handleLastNameChange}/>
+            <div className="invalid-feedback">{lastNameError}</div>
         </div>
 
         <div className="form-group row my-3">
