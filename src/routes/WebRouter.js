@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import TeacherHomeBoard from "../pages/teacher/TeacherHomeBoard"
 import LoginPage from "../pages/LoginPage";
 import RegisterSelect from "../pages/RegisterSelect";
@@ -14,11 +14,13 @@ import { initUser } from '../slices/userInfoSlice';
 import axios from "../config/axios";
 import CreateLessonForm from '../components/layout/lesson/CreateLessonForm';
 import StudentHome from '../pages/student/StudentHome';
+import CoursePreview from '../pages/student/CoursePreview';
 
 function WebRouter() {
 
     const dispatch = useDispatch();
     const role = useSelector(state => state.userInfo.info.role);
+    const token = getAccessToken();
     
 
     const teacherRoutes =  (
@@ -31,13 +33,15 @@ function WebRouter() {
             <Route path="/modify-course/:courseId" element={<ModifyCourse/>}></Route>
             <Route path="/modify-course/:courseId/create-new-chapter" element={<ChapterCreatorPage/>}/>
             <Route path="/modify-course/:courseId/modify-chapter/:chapterId/create-new-lesson" element={<CreateLessonForm/>}/>
+           
         </Routes>
     )
 
     const studentRoutes = (
         <Routes>
             <Route path="/" element={<StudentHome/>}></Route>
-            <Route path="/preview/:courseId" element={<></>}/>
+            <Route path="/preview/:courseId" element={<CoursePreview/>}/>
+            <Route path="*" element={<Navigate to="/"/>}></Route>
         </Routes>
     )
 
@@ -56,10 +60,25 @@ function WebRouter() {
           
       },[dispatch]);
 
+    
   if (role === "student") {
     return studentRoutes
-  } else {
+  } else if (role === "teacher") {
       return teacherRoutes
+  } else if (Boolean(token)) {
+      
+      return (
+          <Routes>
+              <Route path="*" element={<div>Loading...</div>}/>
+          </Routes>
+      )
+  } else {
+      return (
+        <Routes>
+            <Route path= "/login" element={<LoginPage/>}/>
+            <Route path="*" element={<Navigate to="/login"/>}/>
+        </Routes>
+      )
   }
   
 }

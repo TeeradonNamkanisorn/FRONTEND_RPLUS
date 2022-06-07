@@ -24,7 +24,7 @@ function CourseCard({course}) {
             <div className="col-md-8">
                 <div className="card-body">
                     <h5 className="card-title">{course.name}</h5>
-                    <p className="card-text">{course.description}</p>
+                    <p className="card-text border" style={{maxHeight: 200, overflow: "auto"}}>{course.description}</p>
                     
                     <p className="card-text">
                         <small className="text-muted mx-4">Created date:  {createdDate}</small>

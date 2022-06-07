@@ -7,7 +7,6 @@ import { fetchAllCourseAsync } from '../../slices/manyCourseSlice';
 function StudentHome() {
   const dispatch = useDispatch();
   const courses = useSelector(state => state.manyCourses.courses) 
-  console.log(courses);
   const fetchCourses = async () => {
     try {
       dispatch(fetchAllCourseAsync());

@@ -1,3 +1,5 @@
+import en from "javascript-time-ago/locale/en";
+import TimeAgo from "javascript-time-ago";
 export const genJPDate = (dateTime) => {
     const options = {
         day: 'numeric',
@@ -31,4 +33,15 @@ export function secondsToHm(d) {
     var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
     return hDisplay + mDisplay; 
 }
+
+
+// English.
+
+TimeAgo.addDefaultLocale(en);
+
+// Create formatter (English).
+const timeAgo = new TimeAgo("en-US");
+
+export const timeSince = (date) => timeAgo.format(new Date(date), "mini-now");
+timeAgo.format(new Date());
 

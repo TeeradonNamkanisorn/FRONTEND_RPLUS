@@ -12,12 +12,18 @@ const INITIAL_STATE = {chapters: [],
     videoPublicId: "",
     description: "",
     level: "all",
-    length: 0,
+    totalLength: 0,
     isPublished: false,
     price: 0,
     createdAt: "",
     updatedAt: "1970-01-01T10:07:04.000Z",
     teacherId: "",
+    teacher: {
+        firstName: "",
+        lastName: "",
+        id: ""
+    },
+    chapters: [],
     isLoading: false, error: ""
 }
 
@@ -52,9 +58,9 @@ const courseSlice = createSlice({
     extraReducers: builder => {
         builder
         .addCase(fetchCourseAsync.fulfilled, (state, action) => {
-            const {chapters,id, name, imageLink, videoLink, description,level, length, isPublished,price, createdAt, updatedAt,teacherId} = action.payload;
+            const {chapters,id, name, imageLink, videoLink, description,level, totalLength, isPublished,price, createdAt, updatedAt,teacherId} = action.payload;
             state = {
-                chapters,id, name, imageLink, videoLink, description,level, length, isPublished,price, createdAt, updatedAt,teacherId, isLoading: false, error: ""
+                chapters,id, name, imageLink, videoLink, description,level, totalLength, isPublished,price, createdAt, updatedAt,teacherId, isLoading: false, error: ""
             }
             return state
         })
