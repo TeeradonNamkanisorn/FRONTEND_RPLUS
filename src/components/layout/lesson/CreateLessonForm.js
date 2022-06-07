@@ -4,7 +4,7 @@ import bytesToSize from '../../../utils/bytesToSize';
 import DragAndDrop from '../../teacherUserInterfaces/DragAndDrop';
 import { useNavigate, useParams } from "react-router-dom";
 import { getAccessToken } from "../../../services/localStorage";
-import { setChapterLoading } from "../../../slices/courseSlice";
+import { setCourseLoading } from "../../../slices/courseSlice";
 import { useDispatch } from "react-redux";
 
 function CreateLessonForm() {
@@ -23,7 +23,7 @@ function CreateLessonForm() {
         
         
         try {
-            dispatch(setChapterLoading(true));
+            dispatch(setCourseLoading(true));
             if (contentType !== "video") return;
             if (file === null) return setVideoError("lecture material is required");
             const formData = new FormData();
@@ -42,7 +42,7 @@ function CreateLessonForm() {
         } catch (err) {
             console.log(err)
         } finally {
-            dispatch(setChapterLoading(false));
+            dispatch(setCourseLoading(false));
         }
 
 

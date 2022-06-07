@@ -16,6 +16,34 @@
   height: 150px;
 }
 
+.bg-darkblue {
+  background-color: darkblue;
+}
+
+.bg-orange {
+  background-color: orange;
+}
+
+.bg-greenyellow {
+  background-color: greenyellow;
+}
+
+.text-beginner {
+  background-color: rgb(101, 111, 252);
+}
+
+.text-intermediate {
+  background-color: deepskyblue;
+}
+
+.text-advanced {
+  background-color: yellow;
+}
+
+.ms-100 {
+  margin-left: 100px;
+}
+
 /* Dropdown Menu*/
 .menu-container {
   position: relative;

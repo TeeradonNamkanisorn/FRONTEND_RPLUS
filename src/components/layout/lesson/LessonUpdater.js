@@ -1,7 +1,7 @@
 import React, { useId, useState } from 'react'
 import axios from "../../../config/axios";
 import { useDispatch } from 'react-redux';
-import { fetchCourseAsync, setChapterLoading } from '../../../slices/courseSlice';
+import { fetchCourseAsync, setCourseLoading } from '../../../slices/courseSlice';
 import { getAccessToken } from '../../../services/localStorage';
 import bytesToSize from '../../../utils/bytesToSize';
 import { isFileVideo } from '../../../utils/isFileVideo';
@@ -20,7 +20,7 @@ function LessonUpdater({lesson, courseId, setShowing}) {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-            dispatch(setChapterLoading(true));
+            dispatch(setCourseLoading(true));
             const formData = new FormData();
             formData.append("lessonVideo", videoFile);
             formData.append('title', title);
@@ -34,7 +34,7 @@ function LessonUpdater({lesson, courseId, setShowing}) {
         } catch (error) {
             console.log("error")
         } finally {
-            dispatch(setChapterLoading(false));
+            dispatch(setCourseLoading(false));
             setShowing(false);
         }
     }

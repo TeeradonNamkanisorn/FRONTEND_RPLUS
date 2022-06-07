@@ -1,15 +1,19 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import { getAccessToken, saveAccessToken } from '../services/localStorage';
 import axios from "../config/axios";
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const USER_INFO_INITIAL_STATE  = {
     info: {
         id: "",
         username: "",
         email: "",
-        role: ""
+        role: "",
     },
-    error: "",
+    error: {
+        message: ""
+    },
     isLoading: false,
     isLoggedIn: false
 }
@@ -23,18 +27,21 @@ const initUser = createAsyncThunk("userInfo/init", async (arg, thunkApi) => {
     //creates three actions: fulfilled, pending, rejected
     //payload from return is added to the action
     } catch(err) {
-        //will investigate this later
+        
         return thunkApi.rejectWithValue('error')
     }
-    
 });
 
-const loginUser = createAsyncThunk("userInfo/login", async (body) => {
+const loginUser = createAsyncThunk("userInfo/login", async (body, {rejectWithValue}) => {
     //body = {email, password}
-        const res = await axios.post("/auth/login", {email: body.email, password: body.password});
-        const {username, userId, email, token, role} = res.data
-        saveAccessToken(token);
+        try {
+            const res = await axios.post("/auth/login", {email: body.email, password: body.password});
+            const {username, userId, email, token, role} = res.data
+            saveAccessToken(token);
         return {username, userId, email, role};
+        } catch (error) {
+            return rejectWithValue(error?.response?.data?.message || "request error")
+        }
     
 })
 
@@ -47,6 +54,9 @@ const userInfoSlice = createSlice({
             console.log("logout");
             localStorage.clear();
             return state
+        },
+        setUserError: (state, action) => {
+            state.error.message = action.payload
         }
     },
     extraReducers: builder => {
@@ -72,12 +82,17 @@ const userInfoSlice = createSlice({
         .addCase(loginUser.pending, (state, action) => {
             state.isLoading = true;
         })
+        .addCase(loginUser.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = {message: action.payload}
+            
+        })
     }
 });
 
-const {logout} = userInfoSlice.actions;
+const {logout, setUserError} = userInfoSlice.actions;
 
-export {initUser, loginUser, logout} ;
+export {initUser, loginUser, logout, setUserError} ;
 
 export default userInfoSlice.reducer;
 

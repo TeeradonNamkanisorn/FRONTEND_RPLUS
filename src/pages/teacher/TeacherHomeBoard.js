@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import CourseSelectMenu from '../components/layout/course/CourseSelectMenu';
-import axios from "../config/axios";
-import { getAccessToken } from '../services/localStorage';
+import CourseSelectMenu from '../../components/layout/course/CourseSelectMenu';
+import axios from "../../config/axios";
+import { getAccessToken } from '../../services/localStorage';
 import "@popperjs/core"
 import { useSelector } from 'react-redux';
 

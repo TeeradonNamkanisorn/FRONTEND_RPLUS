@@ -1,5 +1,5 @@
 import React from 'react'
-import ChapterCreator from '../components/layout/chapter/ChapterCreator'
+import ChapterCreator from '../../components/layout/chapter/ChapterCreator'
 
 
 function ChapterCreatorPage() {

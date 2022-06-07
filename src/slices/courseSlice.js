@@ -69,7 +69,7 @@ const courseSlice = createSlice({
     }
 })
 
-const setChapterLoading = courseSlice.actions.setLoading;
+const setCourseLoading = courseSlice.actions.setLoading;
 
 export default courseSlice.reducer;
-export {fetchCourseAsync, setChapterLoading};
+export {fetchCourseAsync, setCourseLoading};

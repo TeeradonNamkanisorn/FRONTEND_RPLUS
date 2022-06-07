@@ -1,15 +1,19 @@
 import axios from "../config/axios";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { saveAccessToken } from "../services/localStorage";
 import { useDispatch, useSelector } from "react-redux";
-import {loginUser} from "../slices/userInfoSlice"
+import {loginUser, setUserError} from "../slices/userInfoSlice"
+import {setError} from "../slices/globalErrorSlice";
+import Toast from "../components/common/Toast";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userError = useSelector(state => state.userInfo.error);
+  
 
   const handleNav = () => {
     navigate('/');
@@ -20,13 +24,18 @@ function LoginPage() {
     e.preventDefault();
     try {
       const body = {email,password};
-      
+      console.log('logging in')
       dispatch(loginUser(body));
+      navigate('/');
     } catch(err) {
-      console.log(err);
+      console.log("caught redux error");
+      dispatch(setError(err?.message || err?.response?.data?.message || "Request Error"))
     }
-    navigate('/');
   }
+
+  useEffect(() => {
+    dispatch(setUserError(""));
+  }, [])
   return (
     <div>
         <form className='container w-75' onSubmit={handleSubmit}>
@@ -51,6 +60,7 @@ function LoginPage() {
           </div>
         </form>
         <Link to="/register">Register</Link>
+        <Toast error={userError}/>
     </div>
   )
 }

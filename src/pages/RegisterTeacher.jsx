@@ -47,7 +47,7 @@ export default function RegisterTeacher() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+//
         //POST request
 
        try {
@@ -63,7 +63,7 @@ export default function RegisterTeacher() {
             lastName
         }
 
-        const result = await axios.post("http://localhost:4000/auth/teacher", requestBody);
+        const result = await axios.post("http://localhost:4000/auth/student", requestBody);
         navigate('/');
        } catch(err) {
            console.log(err?.response?.data?.message || err);
@@ -123,7 +123,7 @@ export default function RegisterTeacher() {
         
        
         <div className="d-flex justify-content-between">
-            <button type="button" className="btn btn-primary">Go Back</button>
+            <button type="button" className="btn btn-primary" onClick={()=>navigate('/register')}>Go Back</button>
             <button type="submit" className="btn btn-primary">Submit</button>
         </div>
         </form>

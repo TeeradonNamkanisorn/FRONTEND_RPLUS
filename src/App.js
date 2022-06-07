@@ -9,12 +9,13 @@ import axios from "./config/axios"
 import UserMenu from './components/layout/header/UserMenu';
 import WebRouter from './routes/WebRouter';
 import Spinner from './components/common/Spinner';
+import Toast from './components/common/Toast';
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toast = useRef(null);
   const chaptersLoading = useSelector(state => state.course.isLoading);
+  const error = useSelector(state => state.globalError.message);
 
 
   const handleLogoutClick = () => {
@@ -36,7 +37,7 @@ function App() {
         <Link to="/login" className='text-center'>Login</Link>
         <button onClick={handleLogoutClick}> Logout </button>
         </div>
-        {/*Toast */}
+        
       </div>
       <WebRouter/>
    
@@ -44,6 +45,7 @@ function App() {
     </div>
 
     { (chaptersLoading) && <Spinner title="content"></Spinner> }
+    {/* <Toast message={error}/> */}
     </>
   );
 }

@@ -4,7 +4,7 @@ import axios from "../../../../config/axios";
 import { getAccessToken } from '../../../../services/localStorage';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchCourseAsync, setChapterLoading } from '../../../../slices/courseSlice';
+import { fetchCourseAsync, setCourseLoading } from '../../../../slices/courseSlice';
 import LessonUpdater from '../../lesson/LessonUpdater';
 
 function LessonItem({lesson}) {
@@ -19,7 +19,7 @@ function LessonItem({lesson}) {
 
    const handleDeleteVid = async e => {
        try {
-        dispatch(setChapterLoading(true));
+        dispatch(setCourseLoading(true));
         await axios.delete(`/lesson/video/${lesson.id}`, {
             headers: {
                 authorization: "Bearer " + getAccessToken()
@@ -29,7 +29,7 @@ function LessonItem({lesson}) {
        } catch (err) {
            console.log(err);
        } finally {
-        dispatch(setChapterLoading(false))
+        dispatch(setCourseLoading(false))
        }
 
    }
