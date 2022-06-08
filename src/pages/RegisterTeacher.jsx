@@ -7,6 +7,7 @@ export default function RegisterTeacher() {
     const [firstNameError, setFirstNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
     const [usernameError, setUsernameError] = useState("");
+    const [creditCardError, setCreditCardError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ export default function RegisterTeacher() {
     const [email, setEmail] = useState("");
     const [password, setPassword]= useState("");
     const [confirmPassword, setConfrimPassword] = useState("");
+    const [creditCard, setCreditCard] = useState("");;
 
 
     const handlePasswordChange = (e) => {
@@ -45,6 +47,11 @@ export default function RegisterTeacher() {
         setEmail(e.target.value);
     }
 
+    const handleCreditCardChange = e => {
+        //Validate Credit Card
+        setCreditCard(e.target.value);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 //
@@ -60,10 +67,11 @@ export default function RegisterTeacher() {
             email,
             password,
             firstName,
-            lastName
+            lastName,
+            creditCardNumber: creditCard
         }
 
-        const result = await axios.post("http://localhost:4000/auth/student", requestBody);
+        const result = await axios.post("http://localhost:4000/auth/teacher", requestBody);
         navigate('/');
        } catch(err) {
            console.log(err?.response?.data?.message || err);
@@ -98,7 +106,7 @@ export default function RegisterTeacher() {
             <div className="invalid-feedback">{firstNameError}</div>
         </div>
         <div className="form-group row my-3">
-            <label className="" htmlFor="lastNameInput">Username</label>
+            <label className="" htmlFor="lastNameInput">Last Name</label>
             <input className={`form-control ${lastNameError? "is-invalid" : ""}`} type="text" id="lastNameInput"  placeholder="Enter username" onChange={handleLastNameChange}/>
             <div className="invalid-feedback">{lastNameError}</div>
         </div>
@@ -118,6 +126,13 @@ export default function RegisterTeacher() {
         <div className="form-group row my-3">
             <label className="" htmlFor="confirmPasswordInput">Confirm Password</label>
             <input className="form-control" type="password"  id="confirmPasswordInput"  placeholder="Enter password" onChange={handleConfirmPasswordChange}/>
+        </div>
+
+        <div className="form-group row my-3">
+            <label className="" htmlFor="creditCardInput">Credit Card Number</label>
+            <input className={`form-control ${creditCardError? "is-invalid" : ""}`} type="text"  id="creditCardInput"  placeholder="Enter Card Number"
+            value={creditCard} onChange={handleCreditCardChange}/>
+            <div className="invalid-feedback">{creditCardError}</div>
         </div>
         
         

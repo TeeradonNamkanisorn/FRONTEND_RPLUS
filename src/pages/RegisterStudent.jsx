@@ -2,7 +2,7 @@ import axios from "axios";
 import {useEffect, useState, useReducer, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import { isEmail } from "../utils/validateFunctions";
-export default function RegisterTeacher() {
+export default function RegisterStudent() {
     const navigate = useNavigate();
     const [firstNameError, setFirstNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
@@ -63,7 +63,7 @@ export default function RegisterTeacher() {
             lastName
         }
 
-        const result = await axios.post("http://localhost:4000/auth/teacher", requestBody);
+        const result = await axios.post("http://localhost:4000/auth/student", requestBody);
         navigate('/');
        } catch(err) {
            console.log(err?.response?.data?.message || err);
@@ -82,7 +82,7 @@ export default function RegisterTeacher() {
 
   return (
     <div className="container w-75">
-        <h1>Sign up for free as teacher</h1>
+        <h1>Sign up for free as student</h1>
         <div>
         <form onSubmit={handleSubmit} className="container">
 
@@ -98,7 +98,7 @@ export default function RegisterTeacher() {
             <div className="invalid-feedback">{firstNameError}</div>
         </div>
         <div className="form-group row my-3">
-            <label className="" htmlFor="lastNameInput">Username</label>
+            <label className="" htmlFor="lastNameInput">Last Name</label>
             <input className={`form-control ${lastNameError? "is-invalid" : ""}`} type="text" id="lastNameInput"  placeholder="Enter username" onChange={handleLastNameChange}/>
             <div className="invalid-feedback">{lastNameError}</div>
         </div>

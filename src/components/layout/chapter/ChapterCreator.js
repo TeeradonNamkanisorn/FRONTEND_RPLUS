@@ -27,9 +27,7 @@ const ChapterCreator = ({setShowing, fetchChapters}) => {
         courseId
       }
   
-      const result = await axios.post('/chapter/appendChapter', body, {headers: {
-        authorization: "Bearer " + getAccessToken()
-      }});
+      const result = await axios.post('/chapter/appendChapter', body);
       console.log(result.data);
       handleClose();
       fetchChapters();

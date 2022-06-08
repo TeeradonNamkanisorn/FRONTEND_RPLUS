@@ -31,11 +31,7 @@ const fetchCourseAsync = createAsyncThunk('course/fetch', async(payload, thunkAP
     try {
         const {courseId} = payload;
         const token = getAccessToken();
-        const res = await axios.get('/course/'+courseId, {
-            headers: {
-                authorization: "Bearer "+token
-            }
-        });
+        const res = await axios.get('/course/'+courseId);
         
         return res.data.course
 
@@ -58,9 +54,9 @@ const courseSlice = createSlice({
     extraReducers: builder => {
         builder
         .addCase(fetchCourseAsync.fulfilled, (state, action) => {
-            const {chapters,id, name, imageLink, videoLink, description,level, totalLength, isPublished,price, createdAt, updatedAt,teacherId} = action.payload;
+            const {chapters,id, name, imageLink, videoLink, description,level, totalLength, isPublished,price, createdAt, updatedAt,teacherId, teacher} = action.payload;
             state = {
-                chapters,id, name, imageLink, videoLink, description,level, totalLength, isPublished,price, createdAt, updatedAt,teacherId, isLoading: false, error: ""
+                chapters,id, name, imageLink, videoLink, description,level, totalLength, isPublished,price, createdAt, updatedAt,teacherId,teacher, isLoading: false, error: ""
             }
             return state
         })

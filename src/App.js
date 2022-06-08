@@ -10,16 +10,18 @@ import UserMenu from './components/layout/header/UserMenu';
 import WebRouter from './routes/WebRouter';
 import Spinner from './components/common/Spinner';
 import Toast from './components/common/Toast';
+import { clearCart } from './slices/cartSlice';
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const chaptersLoading = useSelector(state => state.course.isLoading);
   const error = useSelector(state => state.globalError.message);
-
-
+  const cart = useSelector(state => state.cart.cart);
+  const itemNumber = Object.keys(cart).length
   const handleLogoutClick = () => {
    dispatch(logout());
+   dispatch(clearCart());
    navigate('/');
   }
 
@@ -31,9 +33,14 @@ function App() {
           <img className='main_logo' src="/Remote_logo.png" alt="page logo"></img>
         </Link>
         <div className='col-6'>SearchBar</div>
-        <div className='col-1'>Cart</div>
+        <div className='col-1' role="button" onClick={() => navigate('/cart')}>
+          Cart
+         {!!itemNumber && (<span className="badge bg-warning ms-1">{itemNumber}</span>)}
+         
+          </div>
         <div className='col-3'>
         <UserMenu className="text-center"/>
+        <Link to="/edit-user/:userId">Update Profile</Link>
         <Link to="/login" className='text-center'>Login</Link>
         <button onClick={handleLogoutClick}> Logout </button>
         </div>

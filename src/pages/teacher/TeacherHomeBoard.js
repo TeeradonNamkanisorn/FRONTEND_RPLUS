@@ -27,11 +27,7 @@ export default function TeacherHomeBoard() {
     const fetchCourses = async function() {
   
     try {
-      const res = await axios.get('/teacher/courses', {
-        headers: {
-          authorization: "Bearer " + getAccessToken() 
-        }
-      });
+      const res = await axios.get('/teacher/courses');
       setCourses(res.data.courses);
       
     } catch (err) {

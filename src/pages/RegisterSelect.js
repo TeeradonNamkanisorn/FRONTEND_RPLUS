@@ -7,7 +7,8 @@ function RegisterSelect() {
           <h2 className="my-5">You Are Registering As</h2>
           <div className="d-flex justify-content-center">
             <Link to="/register-teacher" className="mx-2">Teacher</Link>
-            <button className="mx-2">Student</button>
+            <Link to="/register-student" className="mx-2">Student</Link>
+            
           </div>
         </div>
     </div>

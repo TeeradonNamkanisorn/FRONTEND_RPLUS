@@ -44,11 +44,7 @@ const ModifyCourse = () => {
     async function clickPublish() {
         try {
             dispatch(setCourseLoading(true));
-            await axios.patch('/course/' + courseId, {} , {
-                headers: {
-                    authorization: "Bearer " + getAccessToken()
-                }
-            });
+            await axios.patch('/course/' + courseId);
             dispatch(fetchCourseAsync({courseId}));
         } catch (err) {
             console.log(err)

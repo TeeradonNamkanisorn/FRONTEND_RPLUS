@@ -10,7 +10,7 @@ function TopicsContainer({chapters}) {
                         <div className="fw-bold">{chapter.name}</div>
                         <ul>
                             {chapter.lessons.map(lesson => (
-                                <li>
+                                <li key={lesson.id}>
                                     {lesson.lessonIndex}. {lesson.title}
                                 </li>
                             ))}

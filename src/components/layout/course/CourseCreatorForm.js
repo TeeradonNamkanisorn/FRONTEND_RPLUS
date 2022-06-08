@@ -78,11 +78,9 @@ const handleNameChange = (e) => {
       formData.append("name", name);
       formData.append("description", description);
       formData.append("level", level);
-      const result = await axios.post('/course/', formData, {headers: {
-        authorization: 'Bearer '+ getAccessToken(),
-        'Content-Type': "multipart/form-data"
-      }});
+      const result = await axios.post('/course/', formData);
       const courseId = result.data.id;
+      console.log(courseId);
       navigate('/modify-course/'+courseId);
     } catch (error) {
       console.log(error)

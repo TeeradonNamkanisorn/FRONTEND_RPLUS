@@ -32,11 +32,7 @@ function CreateLessonForm() {
             formData.append('chapterId', chapterId);
             formData.append('description', lessonDescription);
             setVideoError("");
-            const res = await axios.post('/lesson/video', formData, {
-                headers: {
-                    authorization: "Bearer " + getAccessToken()
-                }
-            });
+            const res = await axios.post('/lesson/video', formData);
             navigate(`/modify-course/${courseId}`)
 
         } catch (err) {

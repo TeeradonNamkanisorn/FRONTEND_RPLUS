@@ -10,7 +10,8 @@ function CourseCard({course}) {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
-}
+   }
+ 
     const HM = secondsToHm(Math.floor(course.totalLength))
 //June 6, 2022
     const updatedDate = genJPDate(course.updatedAt);

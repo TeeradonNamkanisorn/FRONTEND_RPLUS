@@ -67,11 +67,7 @@ function CourseUpdater({courseId}) {
           formData.append("description", courseDescription);
       
           setIsLoading(true);
-          const result = await axios.put('/course/'+courseId, formData,
-               {headers: {
-            authorization: 'Bearer '+ getAccessToken(),
-            'Content-Type': "multipart/form-data"
-          }});
+          const result = await axios.put('/course/'+courseId, formData);
         } catch (error) {
           console.log(error)
         } finally {
@@ -82,7 +78,7 @@ function CourseUpdater({courseId}) {
         async function fetchCourse() {
             try {
                 const token = getAccessToken();
-                const res = await axios.get("/course/"+courseId, {headers: {authorization: "Bearer "+ token}});
+                const res = await axios.get("/course/"+courseId);
                 console.log(res.data);
                 // course:
                 // createdAt: "2022-05-24T05:09:28.000Z"

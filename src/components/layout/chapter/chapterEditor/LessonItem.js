@@ -20,11 +20,7 @@ function LessonItem({lesson}) {
    const handleDeleteVid = async e => {
        try {
         dispatch(setCourseLoading(true));
-        await axios.delete(`/lesson/video/${lesson.id}`, {
-            headers: {
-                authorization: "Bearer " + getAccessToken()
-            }
-        });
+        await axios.delete(`/lesson/video/${lesson.id}`);
         dispatch(fetchCourseAsync({courseId}));
        } catch (err) {
            console.log(err);

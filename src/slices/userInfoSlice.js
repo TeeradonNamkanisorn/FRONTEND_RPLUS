@@ -21,7 +21,7 @@ const USER_INFO_INITIAL_STATE  = {
 const initUser = createAsyncThunk("userInfo/init", async (arg, thunkApi) => {
     try {
         const token = getAccessToken();
-        const res = await axios.get("/auth/", {headers: {authorization: 'Bearer '+token}});
+        const res = await axios.get("/auth/");
         const {userId, email, username, role} = res.data
         return {userId, email, username, role}
     //creates three actions: fulfilled, pending, rejected
@@ -40,6 +40,7 @@ const loginUser = createAsyncThunk("userInfo/login", async (body, {rejectWithVal
             saveAccessToken(token);
         return {username, userId, email, role};
         } catch (error) {
+            console.log(error)
             return rejectWithValue(error?.response?.data?.message || "request error")
         }
     

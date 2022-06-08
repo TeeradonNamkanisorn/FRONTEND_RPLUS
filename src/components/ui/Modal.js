@@ -2,7 +2,7 @@ import React, { useEffect, useId, useLayoutEffect, useRef, useState } from 'reac
 import { Modal as BsModal} from 'bootstrap'
 function Modal(props) {
     const modalId = useId();
-    const {showing, setShowing, children, size, title} = props;
+    const {showing, setShowing, children, size, title, center} = props;
 
     const sizeClass = {
         sm: `modal-sm`,
@@ -33,7 +33,7 @@ function Modal(props) {
     
   return <>
       {<div className="modal" tabIndex="-1" id={modalId} onClick={(e) => {setShowing(prev => !prev)}}>
-        <div className={`modal-dialog ${sizeClass[size] || ''}`} onClick={e=>e.stopPropagation()}>
+        <div className={`modal-dialog ${sizeClass[size] || ''} ${center? "modal-dialog-centered" : ""}`} onClick={e=>e.stopPropagation()}>
             <div className="modal-content">
             <div className="modal-header">
                 <h5 className="modal-title">{title || "Modal Title"}</h5>

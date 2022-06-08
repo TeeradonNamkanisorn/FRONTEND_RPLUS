@@ -15,7 +15,8 @@ import axios from "../config/axios";
 import CreateLessonForm from '../components/layout/lesson/CreateLessonForm';
 import StudentHome from '../pages/student/StudentHome';
 import CoursePreview from '../pages/student/CoursePreview';
-
+import Cart from '../pages/student/Cart';
+import RegisterStudent from '../pages/RegisterStudent';
 function WebRouter() {
 
     const dispatch = useDispatch();
@@ -26,14 +27,12 @@ function WebRouter() {
     const teacherRoutes =  (
         <Routes>
             <Route path="/" element={<TeacherHomeBoard/>}></Route>
-            <Route path="/login" element={<LoginPage/>}></Route>
-            <Route path="/register" element={<RegisterSelect/>}></Route>
             <Route path="/create-new-course" element={<CourseCreatorForm/>}></Route>
-            <Route path="/register-teacher" element={<RegisterTeacher/>}></Route>
             <Route path="/modify-course/:courseId" element={<ModifyCourse/>}></Route>
             <Route path="/modify-course/:courseId/create-new-chapter" element={<ChapterCreatorPage/>}/>
             <Route path="/modify-course/:courseId/modify-chapter/:chapterId/create-new-lesson" element={<CreateLessonForm/>}/>
-           
+
+            <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>
     )
 
@@ -41,6 +40,7 @@ function WebRouter() {
         <Routes>
             <Route path="/" element={<StudentHome/>}></Route>
             <Route path="/preview/:courseId" element={<CoursePreview/>}/>
+            <Route path="/cart" element={<Cart/>}/>
             <Route path="*" element={<Navigate to="/"/>}></Route>
         </Routes>
     )
@@ -65,17 +65,20 @@ function WebRouter() {
     return studentRoutes
   } else if (role === "teacher") {
       return teacherRoutes
-  } else if (Boolean(token)) {
-      
+  } else if (token) {
       return (
           <Routes>
               <Route path="*" element={<div>Loading...</div>}/>
           </Routes>
       )
   } else {
+      console.log("guest")
       return (
         <Routes>
             <Route path= "/login" element={<LoginPage/>}/>
+            <Route path="/register" element={<RegisterSelect/>}></Route>
+            <Route path="/register-teacher" element={<RegisterTeacher/>}></Route>
+            <Route path="/register-student" element={<RegisterStudent/>}/>
             <Route path="*" element={<Navigate to="/login"/>}/>
         </Routes>
       )

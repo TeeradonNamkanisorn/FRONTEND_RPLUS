@@ -4,11 +4,7 @@ import { getAccessToken } from "../services/localStorage";
 
 const fetchAllCourseAsync  = createAsyncThunk("fetchAll", async (payload, thunkApi) => {
     try {
-        const res = await axios.get('/course/', {
-            headers: {
-                authorization: "Bearer " + getAccessToken()
-            }
-        });
+        const res = await axios.get('/course/');
         return res.data;
     } catch (err) {
         thunkApi.rejectWithValue(err.response.data.message)

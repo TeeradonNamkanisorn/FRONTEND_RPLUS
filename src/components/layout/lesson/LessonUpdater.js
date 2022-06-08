@@ -25,11 +25,7 @@ function LessonUpdater({lesson, courseId, setShowing}) {
             formData.append("lessonVideo", videoFile);
             formData.append('title', title);
             formData.append('description', description);
-            await axios.put('/lesson/video/'+lesson.id, formData, {
-                headers: {
-                    authorization: "Bearer "+getAccessToken()
-                }
-            });
+            await axios.put('/lesson/video/'+lesson.id, formData);
             dispatch(fetchCourseAsync({courseId}));
         } catch (error) {
             console.log("error")
