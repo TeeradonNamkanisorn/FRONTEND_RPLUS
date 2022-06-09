@@ -3,9 +3,8 @@ import React from 'react'
 function Spinner({title}) {
   return (
     <div className="d-flex justify-content-center align-items-center offcanvas-backdrop show" style={{zIndex: 1100}}>
-            <span className='ms-3'>Please wait for {title} to load.</span>
-        <div className='spinner-border text-primary'>
-        </div>
+            <span className='ms-3'>{title || "now loading..."}</span>
+        <div className='spinner-border text-primary'></div>
     </div>
   )
 }

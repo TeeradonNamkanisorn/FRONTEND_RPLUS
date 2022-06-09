@@ -11,9 +11,7 @@ const USER_INFO_INITIAL_STATE  = {
         email: "",
         role: "",
     },
-    error: {
-        message: ""
-    },
+    error: "",
     isLoading: false,
     isLoggedIn: false
 }

@@ -3,10 +3,13 @@ import React, {useEffect, useLayoutEffect, useState} from 'react'
 import CartItemsContainer from '../../components/layout/cart/CartItemsContainer';
 import axios from "../../config/axios";
 import { OMISE_PUBLIC_KEY } from '../../config/env';
+import Spinner from '../../components/common/Spinner';
+import Toast from '../../components/common/Toast';
 
-let OmiseCard
+let OmiseCard;
 function Cart() {
     const [loading, setLoading] = useState(false);
+    const [err, setErr] = useState("")
 
     let cartItems = useSelector(state => state.cart.cart);
     cartItems = Object.values(cartItems);
@@ -16,9 +19,16 @@ function Cart() {
     const omiseHandler = () => {
         OmiseCard.open({
             amount: sum,
-            onCreateTokenSuccess: (token) => {
-              /* Handler on token or source creation.  Use this to submit form or send ajax request to server */
-                
+            onCreateTokenSuccess: async (token) => {
+
+                try {
+                    console.log(token)
+                    const res = await sendOmiseData({token: token});
+                    console.log(res.data);
+                } catch (err) {
+                    console.log(err);
+                    setErr(err.response.data.message);
+                }
             },
             onFormClosed: () => {
               /* Handler on form closure. */
@@ -34,20 +44,16 @@ function Cart() {
         })
         OmiseCard.configureButton("#credit-card")
         OmiseCard.attach();
-        
-    
     }
     async function sendOmiseData({token}) {
+        
         try {
             const body = {
                 courseItems: cartItems,
                 omiseToken: token
             }
-            await axios.post('/course/addCourse', body, {
-                headers: {
-
-                }
-            })
+            const res = await axios.post('/student/course/buy', body);
+            return res;
         } catch (err) {
             console.log(err)
         }
@@ -65,9 +71,6 @@ function Cart() {
     useLayoutEffect(() => {
         console.log(window.OmiseCard);
         OmiseCard = window.OmiseCard;
-
-        
-
         //Needs to multiply by 100 to convert the unit to cents
         OmiseCard.configure({
             publicKey: OMISE_PUBLIC_KEY,
@@ -82,7 +85,7 @@ function Cart() {
     
     useEffect(() => {
         creditCardConfigure();
-    }, [])
+    }, [sum])
   return (
     <>
         <CartItemsContainer cartItems={Object.values(cartItems)}/>
@@ -91,6 +94,9 @@ function Cart() {
                 PAY WITH OMISE
             </button>
         </form>
+
+        {loading && <Spinner title={"processing transaction..."}/>}
+        {<Toast error={"test"}/>}
     </>
   )
 }

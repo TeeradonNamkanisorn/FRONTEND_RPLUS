@@ -9,13 +9,12 @@ import axios from "./config/axios"
 import UserMenu from './components/layout/header/UserMenu';
 import WebRouter from './routes/WebRouter';
 import Spinner from './components/common/Spinner';
-import Toast from './components/common/Toast';
 import { clearCart } from './slices/cartSlice';
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const chaptersLoading = useSelector(state => state.course.isLoading);
+  const courseLoading = useSelector(state => state.course.isLoading);
   const error = useSelector(state => state.globalError.message);
   const cart = useSelector(state => state.cart.cart);
   const itemNumber = Object.keys(cart).length
@@ -51,8 +50,8 @@ function App() {
 
     </div>
 
-    { (chaptersLoading) && <Spinner title="content"></Spinner> }
-    {/* <Toast message={error}/> */}
+    { (courseLoading) && <Spinner title="Please wait for the course content to load"></Spinner> }
+    
     </>
   );
 }

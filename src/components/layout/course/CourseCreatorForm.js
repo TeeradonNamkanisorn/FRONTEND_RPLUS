@@ -6,14 +6,15 @@ import axios from "../../../config/axios";
 import { getAccessToken } from "../../../services/localStorage";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { setCourseLoading } from "../../../slices/courseSlice";
 
 const CourseCreatorForm = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [level, setLevel] = useState("all");
   const [imageFile, setImageFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
-  const [loading, isLoading] = useState(false);
   const [nameError, setNameError] = useState("");
   const [fileVideoError, setFileVideoError] = useState("");
   const [fileImageError, setFileImageError] = useState("");
@@ -72,18 +73,22 @@ const handleNameChange = (e) => {
         alert("Invalid inputs");
         return;
       }
+      dispatch(setCourseLoading(true));
       const formData = new FormData();
       formData.append('preview-image', imageFile);
       formData.append('preview-video', videoFile);
       formData.append("name", name);
       formData.append("description", description);
       formData.append("level", level);
+      
       const result = await axios.post('/course/', formData);
       const courseId = result.data.id;
       console.log(courseId);
       navigate('/modify-course/'+courseId);
     } catch (error) {
       console.log(error)
+    } finally {
+      dispatch(setCourseLoading(false));
     }
   }
   

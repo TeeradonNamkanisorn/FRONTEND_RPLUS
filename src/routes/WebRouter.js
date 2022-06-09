@@ -17,6 +17,8 @@ import StudentHome from '../pages/student/StudentHome';
 import CoursePreview from '../pages/student/CoursePreview';
 import Cart from '../pages/student/Cart';
 import RegisterStudent from '../pages/RegisterStudent';
+import Spinner from '../components/common/Spinner';
+import CourseCreator from '../pages/teacher/CourseCreator';
 function WebRouter() {
 
     const dispatch = useDispatch();
@@ -27,7 +29,7 @@ function WebRouter() {
     const teacherRoutes =  (
         <Routes>
             <Route path="/" element={<TeacherHomeBoard/>}></Route>
-            <Route path="/create-new-course" element={<CourseCreatorForm/>}></Route>
+            <Route path="/create-new-course" element={<CourseCreator/>}></Route>
             <Route path="/modify-course/:courseId" element={<ModifyCourse/>}></Route>
             <Route path="/modify-course/:courseId/create-new-chapter" element={<ChapterCreatorPage/>}/>
             <Route path="/modify-course/:courseId/modify-chapter/:chapterId/create-new-lesson" element={<CreateLessonForm/>}/>
@@ -68,7 +70,7 @@ function WebRouter() {
   } else if (token) {
       return (
           <Routes>
-              <Route path="*" element={<div>Loading...</div>}/>
+              <Route path="*" element={<Spinner/>}/>
           </Routes>
       )
   } else {
