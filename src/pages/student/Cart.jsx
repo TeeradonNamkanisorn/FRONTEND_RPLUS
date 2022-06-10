@@ -1,33 +1,40 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import React, {useEffect, useLayoutEffect, useState} from 'react'
 import CartItemsContainer from '../../components/layout/cart/CartItemsContainer';
 import axios from "../../config/axios";
 import { OMISE_PUBLIC_KEY } from '../../config/env';
 import Spinner from '../../components/common/Spinner';
 import Toast from '../../components/common/Toast';
+import SuccessPay from '../../components/layout/cart/SuccessPay';
+import { clearCart } from '../../slices/cartSlice';
 
 let OmiseCard;
 function Cart() {
     const [loading, setLoading] = useState(false);
     const [err, setErr] = useState("")
+    const [success, setSuccess] = useState(false);
+    const dispatch = useDispatch();
 
     let cartItems = useSelector(state => state.cart.cart);
     cartItems = Object.values(cartItems);
     console.log(cartItems)
     const sum = cartItems.reduce((sum, cur) => sum+(cur.price) , 0) * 100;
 
-    const omiseHandler = () => {
+    const omiseHandler = async () => {
         OmiseCard.open({
             amount: sum,
             onCreateTokenSuccess: async (token) => {
 
                 try {
-                    console.log(token)
+                    setLoading(true);
                     const res = await sendOmiseData({token: token});
-                    console.log(res.data);
+                    setSuccess(true);
+                    dispatch(clearCart());
                 } catch (err) {
                     console.log(err);
-                    setErr(err.response.data.message);
+                    setErr( err.response?.data?.message || err.message || "Request Error");
+                } finally {
+                    setLoading(false);
                 }
             },
             onFormClosed: () => {
@@ -47,28 +54,30 @@ function Cart() {
     }
     async function sendOmiseData({token}) {
         
-        try {
-            const body = {
-                courseItems: cartItems,
-                omiseToken: token
-            }
-            const res = await axios.post('/student/course/buy', body);
-            return res;
-        } catch (err) {
-            console.log(err)
+        
+        const body = {
+            courseItems: cartItems,
+            omiseToken: token
         }
+        const res = await axios.post('/student/course/buy', body);
+        return res;
+     
     }
     const handleSubmit= async (e) => {
         e.preventDefault();
+        console.log("handle submit")
         setLoading(true)
-        try {
-            omiseHandler()
-        } catch (err) {
-            console.log(err);
-        }
+        //set sucess = true inside omise handler
+        //ret catch inside omise handler
+        await omiseHandler();
+        setLoading(false);
+        
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
+        //Omise requires the button id #credit-card to exist otherwise will throw an error.
+        if (success) return;
+
         console.log(window.OmiseCard);
         OmiseCard = window.OmiseCard;
         //Needs to multiply by 100 to convert the unit to cents
@@ -81,22 +90,31 @@ function Cart() {
             buttonLabel: "pay with omise",
             submitAuto: "no"
         })
-    }, [cartItems])
-    
-    useEffect(() => {
         creditCardConfigure();
-    }, [sum])
+
+    }, [cartItems, success])
+    
+
+    const NOT_PAID_SCREEN = (
+        <>
+            <CartItemsContainer cartItems={Object.values(cartItems)}/>
+            <form id="checkout-form" >
+                <button id="credit-card" className='btn' type='button' onClick={handleSubmit}>
+                    PAY WITH OMISE
+                </button>
+            </form>
+        </>
+    )
+
+    const SUCCESS_PAID_SCREEN = (
+        <SuccessPay/>
+    )
+
   return (
     <>
-        <CartItemsContainer cartItems={Object.values(cartItems)}/>
-        <form id="checkout-form">
-            <button id="credit-card" className='btn' type='button' onClick={handleSubmit}>
-                PAY WITH OMISE
-            </button>
-        </form>
-
+        {success? SUCCESS_PAID_SCREEN: NOT_PAID_SCREEN}
         {loading && <Spinner title={"processing transaction..."}/>}
-        {<Toast error={"test"}/>}
+        {err && <Toast error={err}/>}
     </>
   )
 }

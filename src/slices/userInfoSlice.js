@@ -55,7 +55,7 @@ const userInfoSlice = createSlice({
             return state
         },
         setUserError: (state, action) => {
-            state.error.message = action.payload
+            state.error= action.payload
         }
     },
     extraReducers: builder => {
@@ -77,13 +77,15 @@ const userInfoSlice = createSlice({
             state.isLoading = false;
             state.info = {username, email, id:userId, role};
             state.isLoggedIn = true;
+            state.error = "";
         })
         .addCase(loginUser.pending, (state, action) => {
             state.isLoading = true;
+            state.error = "";
         })
         .addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false;
-            state.error = {message: action.payload}
+            state.error = action.payload
             
         })
     }

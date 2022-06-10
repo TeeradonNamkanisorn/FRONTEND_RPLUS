@@ -26,7 +26,6 @@ function LoginPage() {
       const body = {email,password};
       console.log('logging in')
       dispatch(loginUser(body));
-      navigate('/');
     } catch(err) {
       console.log("caught redux error");
       dispatch(setError(err?.message || err?.response?.data?.message || "Request Error"))
@@ -35,7 +34,7 @@ function LoginPage() {
 
   useEffect(() => {
     dispatch(setUserError(""));
-  }, [])
+  }, [dispatch])
   return (
     <div>
         <form className='container w-75' onSubmit={handleSubmit}>
@@ -60,7 +59,7 @@ function LoginPage() {
           </div>
         </form>
         <Link to="/register">Register</Link>
-        <Toast error={userError}/>
+        {userError && <Toast error={userError}/>}
     </div>
   )
 }

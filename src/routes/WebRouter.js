@@ -13,12 +13,13 @@ import { getAccessToken } from '../services/localStorage';
 import { initUser } from '../slices/userInfoSlice';
 import axios from "../config/axios";
 import CreateLessonForm from '../components/layout/lesson/CreateLessonForm';
-import StudentHome from '../pages/student/StudentHome';
+import SearchPage from '../pages/student/SearchPage';
 import CoursePreview from '../pages/student/CoursePreview';
 import Cart from '../pages/student/Cart';
 import RegisterStudent from '../pages/RegisterStudent';
 import Spinner from '../components/common/Spinner';
 import CourseCreator from '../pages/teacher/CourseCreator';
+import StudentHome from '../pages/student/StudentHome';
 function WebRouter() {
 
     const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function WebRouter() {
     const studentRoutes = (
         <Routes>
             <Route path="/" element={<StudentHome/>}></Route>
+            <Route path="/search" element={<SearchPage/>}/>
             <Route path="/preview/:courseId" element={<CoursePreview/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="*" element={<Navigate to="/"/>}></Route>

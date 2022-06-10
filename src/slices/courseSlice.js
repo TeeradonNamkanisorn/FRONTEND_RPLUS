@@ -32,7 +32,7 @@ const fetchCourseAsync = createAsyncThunk('course/fetch', async(payload, thunkAP
         const {courseId} = payload;
         const token = getAccessToken();
         const res = await axios.get('/course/'+courseId);
-        
+        console.log("fetching")
         return res.data.course
 
     } catch (error) {

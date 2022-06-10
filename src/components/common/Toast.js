@@ -11,7 +11,6 @@ const Toast = ({error}) => {
     }, []);
 
     useEffect(() => {
-        console.log(error);
         if (error && myToast) {
             myToast.show()
             console.log("showing")

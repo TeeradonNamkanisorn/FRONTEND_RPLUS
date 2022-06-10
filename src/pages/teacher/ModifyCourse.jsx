@@ -21,8 +21,8 @@ const ModifyCourse = () => {
     const chapters = useSelector(state => state.course.chapters);
     const isPublished = useSelector(state => state.course.isPublished);
     const courseLoading = useSelector(state => state.course.isLoading);
-    
-    console.log(isPublished)
+    const [success, setSuccess] = useState(false);
+
     const navigate = useNavigate();
     const params = useParams();
     const courseId = params.courseId;
@@ -35,7 +35,8 @@ const ModifyCourse = () => {
     
     async function fetchChapters() {
             try {
-                dispatch(fetchCourseAsync({courseId}));
+                const res = await dispatch(fetchCourseAsync({courseId}))
+                
             } catch (err) {
                 setApiError(err?.response?.data?.message || "chapter request error")
             }
@@ -58,7 +59,7 @@ const ModifyCourse = () => {
         
             fetchChapters();
         
-    }, [courseId])
+    }, [courseId, fetchChapters])
     
   return (
     <>

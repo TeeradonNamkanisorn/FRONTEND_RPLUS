@@ -1,26 +1,20 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import CoursesContainer from '../../components/layout/course/CoursesContainer';
+import { useNavigate } from 'react-router-dom'
 import axios from "../../config/axios";
-import { fetchAllCourseAsync } from '../../slices/manyCourseSlice';
+import { fetchOwnCoursesAsync } from '../../slices/manyCourseSlice';
 
 function StudentHome() {
-  const dispatch = useDispatch();
-  const courses = useSelector(state => state.manyCourses.courses) 
-  const fetchCourses = async () => {
-    try {
-      dispatch(fetchAllCourseAsync());
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
-  useEffect(() => {
-    fetchCourses();
-  }, [])
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const courses = useSelector(state => state.manyCourses.courses);
+    const coursesError = useSelector(state => state.manyCourses.error);
+    console.log(courses);
+    useEffect(() => {
+        dispatch(fetchOwnCoursesAsync());
+    }, [dispatch])
   return (
-    <CoursesContainer courses={courses}/>
+    <div style={{fontWeight: "bold"}} role="button" onClick={() => navigate('/search')}>Get more courses</div>
   )
 }
 
