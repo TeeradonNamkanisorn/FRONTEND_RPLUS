@@ -58,8 +58,8 @@ const ModifyCourse = () => {
     useEffect(() => {
         
             fetchChapters();
-        
-    }, [courseId, fetchChapters])
+        //React keeps recommending fetchChapters as a dependency but in causes infinite rerendering.
+    }, [])
     
   return (
     <>

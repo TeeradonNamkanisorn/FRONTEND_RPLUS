@@ -6,20 +6,15 @@ import { genJPDate, secondsToHm } from "../../../services/timeFormatter";
 function CourseCard({course}) {
    const navigate = useNavigate();
 
-   const dateOptions = {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-   }
  
     const HM = secondsToHm(Math.floor(course.totalLength))
 //June 6, 2022
     const updatedDate = genJPDate(course.updatedAt);
     const createdDate = genJPDate(course.createdAt);
   return (
-    <div className="card mb-3 mx-auto" style={{maxWidth: 900}}>
+    <div className="card mb-3 mx-auto p-3" style={{maxWidth: 900}}>
         <div className="row g-0">
-            <div className="col-md-4">
+            <div className="col-md-4 d-flex flex-column justify-content-center">
                 <img src={course.imageLink} className="img-fluid rounded-start" alt="course image" />
             </div>
             <div className="col-md-8">
@@ -41,12 +36,14 @@ function CourseCard({course}) {
                         </div>
                         <p className='card-text mx-5 text-center'>Instructor: {course.teacher.firstName} {course.teacher.lastName}</p>
                     </div>
+
+                    <span className='ms-0'>Price: </span>
+                    <span className="card-text" style={{fontWeight: "bold"}}>{"$" + course.price}</span>
+                </div>
                     <div className='d-flex w-75 justify-content-between mx-auto my-3'>
                         <button className='btn btn-success' onClick={()=>navigate(`/preview/${course.id}`)}> Preview Course</button>
                         <button className='btn btn-info'>Add to Cart</button>
                     </div>
-
-                </div>
             </div>
         </div>
     </div>

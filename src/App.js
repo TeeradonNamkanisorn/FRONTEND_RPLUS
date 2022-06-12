@@ -15,6 +15,8 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const courseLoading = useSelector(state => state.course.isLoading);
+  const userLoading = useSelector(state => state.userInfo.isLoading);
+  const manyCourseLoading = useSelector(state => state.manyCourses.isLoading);
   const error = useSelector(state => state.globalError.message);
   const cart = useSelector(state => state.cart.cart);
   const itemNumber = Object.keys(cart).length
@@ -50,7 +52,8 @@ function App() {
 
     </div>
 
-    { (courseLoading) && <Spinner title="Please wait for the course content to load"></Spinner> }
+    { (courseLoading || userLoading || manyCourseLoading) && <Spinner title="Please wait for the course content to load"></Spinner> }
+
     
     </>
   );

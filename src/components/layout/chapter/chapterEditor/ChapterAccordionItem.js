@@ -8,8 +8,8 @@ function ChapterAccordionItem({styleClasses, chapter}) {
     const {lessons = []} = chapter;
 
 
-    
-
+    //show? styleClasses.button.showing : styleClasses.button.hiding
+    //show? styleClasses.collapase.showing : styleClasses.collapase.hiding
 
   const handleClick = e => {
     setShow(prev => !prev);
@@ -17,13 +17,13 @@ function ChapterAccordionItem({styleClasses, chapter}) {
   return (
     <>
       <div className="accordion-item">
-      <h2 className="accordion-header" >
-        <button className={show? styleClasses.button.showing : styleClasses.button.hiding} type="button" //data-bs-toggle="collapse" data-bs-target={'#collapse'+chapter?.id}
+      <h2 className="accordion-header" id={"heading"+chapter?.id}>
+        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={'#collapse'+chapter?.id} aria-expanded="true" aria-controls={"collapse"+chapter?.id}
         onClick={handleClick}>
           Chapter {chapter?.chapterIndex}: {chapter?.name}
         </button>
       </h2> 
-      <div  className={show? styleClasses.collapase.showing : styleClasses.collapase.hiding} //aria-labelledby="headingOne" data-bs-parent="#accordionExample" id={'collapse'+chapter?.id}
+      <div  className="accordion-collapse collapse show" aria-labelledby={"heading"+chapter?.id} data-bs-parent="#accordionExample" id={'collapse'+chapter?.id}
       >
         <div className="accordion-body">
           <p>{chapter?.description}</p>

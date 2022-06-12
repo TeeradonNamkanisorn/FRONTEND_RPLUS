@@ -20,6 +20,8 @@ import RegisterStudent from '../pages/RegisterStudent';
 import Spinner from '../components/common/Spinner';
 import CourseCreator from '../pages/teacher/CourseCreator';
 import StudentHome from '../pages/student/StudentHome';
+import StudyRoom from '../pages/student/StudyRoom';
+import LessonView from '../components/layout/study/LessonView';
 function WebRouter() {
 
     const dispatch = useDispatch();
@@ -45,6 +47,10 @@ function WebRouter() {
             <Route path="/search" element={<SearchPage/>}/>
             <Route path="/preview/:courseId" element={<CoursePreview/>}/>
             <Route path="/cart" element={<Cart/>}/>
+            <Route path="/study/:courseId" element={<StudyRoom/>}>
+              <Route path=":chapterId/:lessonId" element={<LessonView/>}/>
+              <Route path="*" element={<>home</>}/>
+            </Route>
             <Route path="*" element={<Navigate to="/"/>}></Route>
         </Routes>
     )
@@ -70,9 +76,10 @@ function WebRouter() {
   } else if (role === "teacher") {
       return teacherRoutes
   } else if (token) {
+      // for when the user is loading
       return (
           <Routes>
-              <Route path="*" element={<Spinner/>}/>
+              <Route path="*" element={<div></div>}/>
           </Routes>
       )
   } else {

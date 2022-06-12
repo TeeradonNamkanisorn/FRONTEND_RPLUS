@@ -25,6 +25,7 @@ function SearchPage() {
   }, [])
   return (
   <>
+    <h2 className='text-center'>Available Courses</h2>
     <CoursesContainer courses={courses}/>
     <Toast error={coursesError}/>
   </>

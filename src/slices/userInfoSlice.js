@@ -41,8 +41,8 @@ const loginUser = createAsyncThunk("userInfo/login", async (body, {rejectWithVal
             console.log(error)
             return rejectWithValue(error?.response?.data?.message || "request error")
         }
-    
 })
+
 
 const userInfoSlice = createSlice({
     name: "userInfo",
@@ -56,6 +56,9 @@ const userInfoSlice = createSlice({
         },
         setUserError: (state, action) => {
             state.error= action.payload
+        },
+        setUserLoading: (state, action) => {
+            state.isLoading = action.payload;
         }
     },
     extraReducers: builder => {
@@ -91,9 +94,9 @@ const userInfoSlice = createSlice({
     }
 });
 
-const {logout, setUserError} = userInfoSlice.actions;
+const {logout, setUserError, setUserLoading} = userInfoSlice.actions;
 
-export {initUser, loginUser, logout, setUserError} ;
+export {initUser, loginUser, logout, setUserError, setUserLoading} ;
 
 export default userInfoSlice.reducer;
 

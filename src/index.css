@@ -3,8 +3,8 @@
 }
 /* Reusables */
 
-.m150 {
-  margin: 0 150px;
+.w-60 {
+  width: 60%;
 }
 
 .d_grid {
@@ -14,6 +14,16 @@
 .main_logo {
   width: 150px;
   height: 150px;
+}
+
+.active-pink {
+  background-color: #841f29;
+  color: #f8d7d9;
+}
+
+.active-blue {
+  background-color: #d0e2fe;
+  color: #084298;
 }
 
 .bg-darkblue {
@@ -38,6 +48,10 @@
 
 .text-advanced {
   background-color: yellow;
+}
+
+.bg-lightGray {
+  background-color: gainsboro;
 }
 
 .ms-100 {
@@ -206,4 +220,38 @@
   grid-column: 10/12;
   align-self: flex-end;
   justify-self: center;
+}
+
+/* ================== Dialog With Arrow =================== */
+
+.progress-box {
+  position: absolute;
+  width: 50px;
+  height: 30px;
+  top: -35px;
+}
+
+.progress-box:after {
+  content: " ";
+  position: absolute;
+  right: 14px;
+  bottom: -15px;
+  border-top: 15px solid #198754;
+  border-right: 11px solid transparent;
+  border-left: 11px solid transparent;
+}
+
+.progress-label {
+  position: relative;
+  top: 20px;
+}
+
+.view-container {
+  width: 70vw;
+  border: 1px solid black;
+  margin-left: 12vw;
+}
+
+.view-video {
+  max-width: 700px;
 }

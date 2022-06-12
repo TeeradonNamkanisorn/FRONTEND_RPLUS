@@ -5,6 +5,7 @@ const Toast = ({error}) => {
     const ref = useRef(null);
     const [myToast, setMyToast] = useState(null);
 
+    console.log("error:" ,error);
     useEffect(()=>{
         const toast = new BsToast(ref.current);
         setMyToast(toast);
