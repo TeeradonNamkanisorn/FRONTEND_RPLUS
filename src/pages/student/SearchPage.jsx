@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../components/common/Spinner';
 import Toast from '../../components/common/Toast';
 import CoursesContainer from '../../components/layout/course/CoursesContainer';
+import SearchSideBar from '../../components/layout/courseSearch/SearchSideBar';
 import axios from "../../config/axios";
 import { fetchAllCourseAsync } from '../../slices/manyCourseSlice';
 
@@ -20,15 +21,17 @@ function SearchPage() {
     }
   }
   
+  
   useEffect(() => {
     fetchCourses();
   }, [])
   return (
-  <>
+  <div className='position-relative'>
     <h2 className='text-center'>Available Courses</h2>
+    <SearchSideBar/>
     <CoursesContainer courses={courses}/>
     <Toast error={coursesError}/>
-  </>
+  </div>
   )
 }
 

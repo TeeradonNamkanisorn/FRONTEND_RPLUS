@@ -255,3 +255,13 @@
 .view-video {
   max-width: 700px;
 }
+
+/* ===search sidebar=== */
+.search-side {
+  width: 15vw;
+  border: 2px solid black;
+  margin-left: 2rem;
+  position: absolute;
+  margin-right: 1rem;
+  border-radius: 10px;
+}

@@ -3,12 +3,24 @@ import axios from "../config/axios";
 import { getAccessToken } from "../services/localStorage";
 
 //Fetch all NOT OWNED
-const fetchAllCourseAsync  = createAsyncThunk("fetchAll", async (payload, thunkApi) => {
+const fetchAllCourseAsync  = createAsyncThunk("fetchAll", async (payload = {}, thunkApi) => {
     try {
-        const res = await axios.get('/course/');
+        //query = {popularity: true, keyword: "foo"}
+        const query = payload;
+        let requestQuery = "?"
+        for (let key in query) {
+            requestQuery +=  (key + "=" + query[key] + "&")
+        }
+
+        //Remove the last &
+        requestQuery = requestQuery.slice(0, requestQuery.length-1);
+        
+
+        const res = await axios.get('/course/'+requestQuery);
         return res.data;
     } catch (err) {
-        return thunkApi.rejectWithValue(err.response.data.message || "server error")
+        console.log(err);
+        return thunkApi.rejectWithValue(err.response.data.message|| err.message || "server error")
         
     }
 });
@@ -20,7 +32,7 @@ const fetchOwnCoursesAsync = createAsyncThunk("fetchOwned", async (payload, thun
     } catch(err) {
         return thunkApi.rejectWithValue(err?.response?.data?.message|| err?.message || "request error")
     }
-})
+});
 
 const manyCourseSlice = createSlice({
     name: "manyCourse",
@@ -30,7 +42,7 @@ const manyCourseSlice = createSlice({
         isLoading: false
     },
     reducers: {
-
+      
     },
     extraReducers: builder => {
         builder
