@@ -9,10 +9,15 @@ function SearchSideBar() {
             popularity: true
         }));
     }
+    const handleSearchByDate = async() => {
+        dispatch(fetchAllCourseAsync({
+            sortByDate: true
+        }))
+    }
   return (
     <div className='search-side text-center'>
         <button className='btn btn-danger mt-4' onClick={handleSearchByPopularity}>Sort by popularity</button>
-        <button className='btn btn-warning my-3'>Sort By Latest Update</button>
+        <button className='btn btn-warning my-3' onClick={handleSearchByDate}>Sort By Latest Update</button>
     </div>
   )
 }

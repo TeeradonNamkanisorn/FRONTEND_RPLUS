@@ -12,8 +12,11 @@
 }
 
 .main_logo {
-  width: 150px;
-  height: 150px;
+  max-width: 150px;
+  max-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .active-pink {
@@ -222,6 +225,12 @@
   justify-self: center;
 }
 
+/* extra chapter accordion styles */
+.chapter-acc-description {
+  max-height: 150px;
+  overflow: auto;
+}
+
 /* ================== Dialog With Arrow =================== */
 
 .progress-box {
@@ -260,7 +269,7 @@
 .search-side {
   width: 15vw;
   border: 2px solid black;
-  margin-left: 2rem;
+  margin-left: 1rem;
   position: absolute;
   margin-right: 1rem;
   border-radius: 10px;

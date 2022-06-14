@@ -4,37 +4,31 @@ import CourseSelectMenu from '../../components/layout/course/CourseSelectMenu';
 import axios from "../../config/axios";
 import { getAccessToken } from '../../services/localStorage';
 import "@popperjs/core"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTeacherCoursesAsync } from '../../slices/manyCourseSlice';
 
 
 export default function TeacherHomeBoard() {
   const navigate = useNavigate();
-  const [courses, setCourses] = useState([]);
+  const courses = useSelector(state => state.manyCourses.courses);
   const loginTrigger = useSelector(state => state.userInfo.isLoggedIn);
   const myDropdown = useRef(null);
-  
+  const dispatch = useDispatch();
+
   // const handleDropdownClick = () => {
     //   const dd = new Dropdown(myDropdown.current)
     //   console.log(typeof myDropdown.current);
     //   dd.toggle();
     // }
     
+    
     const handleNavClick = () => {
       navigate("/create-new-course");
     }
   useEffect(() => {
 
-    const fetchCourses = async function() {
-  
-    try {
-      const res = await axios.get('/teacher/courses');
-      setCourses(res.data.courses);
-      
-    } catch (err) {
-      console.log(err);
-    }
-    }
-    fetchCourses()
+      dispatch(fetchTeacherCoursesAsync())
+   
   }, [loginTrigger])
   return (
     <>

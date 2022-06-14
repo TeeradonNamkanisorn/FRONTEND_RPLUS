@@ -74,6 +74,7 @@ function CourseUpdater({courseId}) {
           setIsLoading(false)
         }
     };
+    //Early code. Still works for now. Haven't refactored to redux yet.
     useEffect(() => {
         async function fetchCourse() {
             try {

@@ -17,7 +17,7 @@ function ChapterEditContainer({chapters, fetchChapters}) {
   return (
 <div className="accordion" id="accordionExample">
   {chapters.map(chapter => (
-    <ChapterAccordionItem styleClasses={styleClasses} chapter={chapter} fetchChapters={fetchChapters} key={chapter.id}/>
+    <ChapterAccordionItem  chapter={chapter} fetchChapters={fetchChapters} key={chapter.id}/>
   ))}
   
 </div>

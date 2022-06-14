@@ -33,7 +33,7 @@ function StudyRoom() {
             <StudyAccordion chapters={chapters}/>
         </Sidebar>
         <Outlet/>
-        {courseError && <Toast error={courseError}/>}
+       
     </>
   )
 }
