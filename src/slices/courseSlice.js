@@ -42,7 +42,6 @@ const fetchCourseAsync = createAsyncThunk(
     try {
       const { courseId } = payload;
       const res = await axios.get("/course/" + courseId);
-      console.log(res.data)
       return res.data.course;
     } catch (err) {
       return thunkAPI.rejectWithValue(

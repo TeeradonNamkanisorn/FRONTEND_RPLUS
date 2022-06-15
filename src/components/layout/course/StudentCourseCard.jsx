@@ -13,6 +13,9 @@ function StudentCourseCard({course}) {
     const HM = secondsToHm(Math.round(totalLength));
     const percentage = numberCompleted * 100/numberLesson;
     
+    const handleCertificate = () => {
+        
+    }
   
   return (
     <div className="card mb-3 mx-auto" style={{maxWidth: 900}}>
@@ -45,6 +48,7 @@ function StudentCourseCard({course}) {
                    
                     <div className='d-flex w-75 justify-content-between mx-auto my-3'>
                         <button className='btn btn-success' onClick={()=>navigate(`/study/${course.id}`)}> Go To Course</button>
+                        <button className='btn' style={{ color: "white",backgroundColor: "purple"}} disabled={percentage !== 100}>Get certificate</button>
                     </div>
 
                 </div>

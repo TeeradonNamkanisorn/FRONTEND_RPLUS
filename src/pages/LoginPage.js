@@ -4,8 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { saveAccessToken } from "../services/localStorage";
 import { useDispatch, useSelector } from "react-redux";
 import {loginUser, setUserError} from "../slices/userInfoSlice"
-import {setError} from "../slices/globalErrorSlice";
-import Toast from "../components/common/Toast";
+
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -22,14 +21,9 @@ function LoginPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
       const body = {email,password};
-      console.log('logging in')
       dispatch(loginUser(body));
-    } catch(err) {
-      console.log("caught redux error");
-      dispatch(setError(err?.message || err?.response?.data?.message || "Request Error"))
-    }
+    
   }
 
   useEffect(() => {
@@ -59,7 +53,7 @@ function LoginPage() {
           </div>
         </form>
         <Link to="/register">Register</Link>
-        {userError && <Toast error={userError}/>}
+       
     </div>
   )
 }

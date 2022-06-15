@@ -28,6 +28,7 @@ function App() {
   const userLoading = useSelector((state) => state.userInfo.isLoading);
   const manyCourseLoading = useSelector((state) => state.manyCourses.isLoading);
   const courseError = useSelector(state=>state.course.error);
+  const userError = useSelector(state => state.manyCourses.error)
   const cart = useSelector((state) => state.cart.cart);
   const itemNumber = Object.keys(cart).length;
   const role = useSelector((state) => state.userInfo.info.role);
@@ -78,6 +79,7 @@ function App() {
         <Spinner title="Please wait for the course content to load"></Spinner>
       )}
       {courseError && <Toast error={courseError}/>}
+      {userError && <Toast error={userError}/>}
     </>
   );
 }

@@ -12,7 +12,6 @@ const styleClasses = {
 }
 
 function ChapterEditContainer({chapters, fetchChapters}) {
-  console.log(chapters);
 
   return (
 <div className="accordion" id="accordionExample">

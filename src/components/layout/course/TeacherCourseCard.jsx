@@ -6,8 +6,6 @@ import { genJPDate, secondsToHm } from "../../../services/timeFormatter";
 function TeacherCourseCard({ course }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showing, setShowing] = useState(false);
-  console.log(course);
   const { id: courseId, price, name, description, imageLink } = course;
 
   const HM = secondsToHm(Math.round(course.totalLength));
