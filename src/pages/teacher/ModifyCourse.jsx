@@ -57,13 +57,12 @@ const ModifyCourse = () => {
 
   useEffect(() => {
     fetchChapters();
-    //React keeps recommending fetchChapters as a dependency but in causes infinite rerendering.
   }, []);
 
   return (
     <>
       <div className="container">
-        <CourseUpdater courseId={courseId} />
+        <CourseUpdater />
         <ChapterEditContainer
           chapters={chapters}
           fetchChapters={fetchChapters}
@@ -79,7 +78,7 @@ const ModifyCourse = () => {
           <div className="d-flex align-items-center justify-content-center w_50">
             <i className="fa-solid fa-circle-plus fa-3x mx-3"></i>
             <button
-              className="mx-3"
+              className="mx-3 btn btn-dark"
               onClick={() => setShowing((prev) => !prev)}
             >
               Add New Chapter

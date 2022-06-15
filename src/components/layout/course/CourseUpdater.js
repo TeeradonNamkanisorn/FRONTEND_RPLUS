@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useState, useEffect } from 'react';
 import { isFileImage } from '../../../utils/isFileImage';
 import { isFileVideo } from '../../../utils/isFileVideo';
 import axios from "../../../config/axios"
 import { getAccessToken } from '../../../services/localStorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCourseAsync, setCourseError, setCourseLoading } from '../../../slices/courseSlice';
 
-function CourseUpdater({courseId}) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [apiError, setApiError] = useState("");
+function CourseUpdater({}) {
+    //new redux logic
+    const dispatch = useDispatch();
+    const course = useSelector(state => state.course);
+    const {name: initialCourseName, description: initialCourseDescription, level: initialLevel} = course;
+    const videoRef = useRef(null);
+
+  
     const [courseDescription, setCourseDescription] = useState("");
     const [courseName, setCourseName] = useState("");
     const [level, setLevel] = useState("all");
@@ -59,6 +66,9 @@ function CourseUpdater({courseId}) {
     const handleUpdateSubmit = async (e) => {
         try {
           e.preventDefault();
+          dispatch(setCourseLoading(true));
+          dispatch(setCourseError(""));
+
           const formData = new FormData();
           formData.append('preview-image', imageFile);
           formData.append('preview-video', videoFile);
@@ -66,43 +76,28 @@ function CourseUpdater({courseId}) {
           formData.append("level", level);
           formData.append("description", courseDescription);
       
-          setIsLoading(true);
-          const result = await axios.put('/course/'+courseId, formData);
+
+          await axios.put('/course/'+course.id, formData);
+          dispatch(fetchCourseAsync({courseId:course.id}))
         } catch (error) {
-          console.log(error)
+          dispatch(setCourseError(error.response?.data?.message || error.message || "requestError"))
         } finally {
-          setIsLoading(false)
+          dispatch(setCourseLoading(false))
         }
     };
     //Early code. Still works for now. Haven't refactored to redux yet.
     useEffect(() => {
-        async function fetchCourse() {
-            try {
-                const token = getAccessToken();
-                const res = await axios.get("/course/"+courseId);
-                console.log(res.data);
-                // course:
-                // createdAt: "2022-05-24T05:09:28.000Z"
-                // description: "Uploading a video and an image"
-                // id: "59a73fbe-2b4b-4037-8ed7-95ab8be1c6fc"
-                // imageLink: "http://res.cloudinary.com/dd59rpcj4/image/upload/v1653368959/9fdd6ade-0bca-4608-819d-b48c12663698video-camera-icon.png.png"
-                // isPublished: false
-                // length: 0
-                // level: "intermediate"
-                // name: "Third Course"
-                // price: 0
-                // teacherId: "25251e87-1e4f-4465-a3ac-732f3ea52962"
-                // updatedAt: "2022-05-24T05:09:28.000Z"
-                // videoLink: "http://res.cloudinary.com/dd59rpcj4/video/upload/v1653368967/cc7f44a2-1817-42a2-8733-6e16261c89e0Venice_5.mp4.mp4"
-                setCourseName(res?.data?.course?.name);
-                setCourseDescription(res?.data?.course?.description);
-                setLevel(res?.data?.course?.level);
-        } catch (err) {
-            setApiError(err?.response?.data?.message || "request error") 
+       
+        setCourseName(initialCourseName)
+        setCourseDescription(initialCourseDescription);
+        setLevel(initialLevel)
+    }, [course])
+
+    useEffect(() => {
+        if (videoRef.current) {
+          videoRef.current.load();
         }
-        }
-        fetchCourse();
-    }, [courseId])
+    }, [course, videoFile])
   return (
     <>
          <form onSubmit={handleUpdateSubmit}>
@@ -129,41 +124,49 @@ function CourseUpdater({courseId}) {
 
         <div className="form-group row my-3">
           <label className="col-sm-2 col-form-label offset-sm-1" htmlFor="description">Level: </label>
-          <select onChange={e => setLevel(e.target.value)} className="col-sm-1" value={level}>
-            <option value="all">All</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
+          <div className='col-sm-1 d-flex align-items-center'>
+            <select onChange={e => setLevel(e.target.value)} className="p-2" value={level}>
+              <option value="all">All</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
         </div>
 
         <div className="my-3 form-group row">
-          <label htmlFor="formImage" className="form-label col-2 offset-sm-1" >Course Preview Image</label>
+          <label htmlFor="formImage" className="form-label col-2 offset-sm-1" >Update Preview Image</label>
           <div className="col-5">
             <input className={`form-control ${fileImageError? 'is-invalid': ''}`} type="file" id="formImage" onChange={handleImageChange}/>
             <div className="invalid-feedback">{fileImageError}</div>
           </div>
+          <img src={imageFile ? URL.createObjectURL(imageFile) : course.imageLink}
+           className="d-block mx-auto my-3 " style={{maxWidth: 500, borderRadius: 10}}>
+           </img>
+           { imageFile && <div className="alert alert-info w-75 mx-auto" role="alert">
+          Image Uploaded. Click update course header to save the image.
+          </div>}
         </div>
 
         <div className="my-3 form-group row">
-          <label htmlFor="formVideo" className="form-label col-2 offset-sm-1" >Course Preview Video</label>
+          <label htmlFor="formVideo" className="form-label col-2 offset-sm-1" >Update Preview Video</label>
           <div className="col-5">
             <input className={`form-control ${fileVideoError? 'is-invalid': ''}`} type="file" id="formVideo" onChange={handleVideoChange}/>
             <div className="invalid-feedback">{fileVideoError}</div>
           </div>
+          <video style={{maxWidth: 600}} controls className="mx-auto my-3" ref={videoRef}>
+            <source src={videoFile? URL.createObjectURL(videoFile) : course.videoLink}></source>
+          </video>
+          {videoFile && 
+          <div className="alert alert-info w-75 mx-auto" role="alert">
+          Video Uploaded. Click update course header to save the new video.
+        </div>}
         </div>
 
         <div className="d-flex justify-content-center my-5">
           <button type="submit" className="btn btn-primary rounded-pill">Update Course Headers</button>
         </div>
-        {isLoading && 
-        <div className="w-25 mx-auto">
-            <div className="d-flex justify-content-between">
-                <strong>Updating...</strong>
-                <div className="spinner-border ms-auto" role="status" aria-hidden="true"></div>
-            </div>
-        </div>
-        }
+        
       </form>
     </>
   )
