@@ -12,8 +12,6 @@ function LessonView() {
     const {lessonId, chapterId} = useParams();
     const chapters = useSelector(state => state.course.chapters);
     const completedLessons = useSelector(state => state.course.completedLessons);
-    const isLoading = useSelector(state => state.course.isLoading);
-    const error = useSelector(state => state.course.error);
     const prev_completed_ids = useSelector(state => state.course.previouslyCompletedLessons);
     const vidref = useRef(null);
     const [showing, setShowing] = useState(false);
@@ -64,15 +62,15 @@ function LessonView() {
         </p>
 
         {isCompleted? //If for some reason the guy wants to 'unwatch' the lesson.
-        <button className='btn btn-danger col-2 ms-4' onClick={()=>setShowing(true)}>Unmark complete</button>
+        <button className='btn btn-danger col-2 ms-4 align-self-start' onClick={()=>setShowing(true)}>Unmark complete</button>
         : 
         lessonHasUpdated ? 
         //Student has watched the video but the teacher updated the lesson so the student has to rewatch. Notify the student.
-        <button className='btn btn-warning col-2 ms-4' onClick={handleReadd} >
+        <button className='btn btn-warning col-2 ms-4 align-self-start' onClick={handleReadd} >
             Mark completed again
         </button>
         : //Student hasn't touched this lesson before
-        <button className='btn btn-success col-2 ms-4' onClick={handleLessonComplete} >
+        <button className='btn btn-success col-2 ms-4 align-self-start' onClick={handleLessonComplete} >
             Mark complete
         </button>
          }

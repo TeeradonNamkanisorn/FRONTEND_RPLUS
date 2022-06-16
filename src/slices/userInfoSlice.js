@@ -10,6 +10,9 @@ const USER_INFO_INITIAL_STATE  = {
         username: "",
         email: "",
         role: "",
+        firstName: "",
+        lastName: "",
+        imageUrl: ""
     },
     error: "",
     isLoading: false,
@@ -20,8 +23,8 @@ const initUser = createAsyncThunk("userInfo/init", async (arg, thunkApi) => {
     try {
         const token = getAccessToken();
         const res = await axios.get("/auth/");
-        const {userId, email, username, role} = res.data
-        return {userId, email, username, role}
+        console.log(res.data)
+        return res.data
     //creates three actions: fulfilled, pending, rejected
     //payload from return is added to the action
     } catch(err) {
@@ -62,8 +65,8 @@ const userInfoSlice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(initUser.fulfilled, (state, {payload: {username, email, userId, role}}) => {
-            state.info = {username, email, id:userId, role};
+        builder.addCase(initUser.fulfilled, (state, {payload}) => {
+            state.info = payload;
             state.isLoading = false;
             state.isLoggedIn = true;
         })
@@ -76,9 +79,9 @@ const userInfoSlice = createSlice({
             console.log(action.payload);
             localStorage.clear();
         })
-        .addCase(loginUser.fulfilled, (state, {payload: {username, email, userId, role}}) => {
+        .addCase(loginUser.fulfilled, (state, {payload}) => {
             state.isLoading = false;
-            state.info = {username, email, id:userId, role};
+            state.info = payload
             state.isLoggedIn = true;
             state.error = "";
         })

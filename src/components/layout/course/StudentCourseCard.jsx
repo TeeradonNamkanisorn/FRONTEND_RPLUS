@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { genJPDate, secondsToHm } from '../../../services/timeFormatter';
 import ProgressBar from '../../display/ProgressBar';
-
+import CertificateButton from '../../ui/CertificateButton';
 
 
 function StudentCourseCard({course}) {
@@ -10,18 +10,17 @@ function StudentCourseCard({course}) {
     const {updatedAt, totalLength, createdAt, numberCompleted, numberLesson} = course;
     const createdDate = genJPDate(createdAt);
     const updatedDate = genJPDate(updatedAt);
-    const HM = secondsToHm(Math.round(totalLength));
+    const HM = secondsToHm(Math.ceil(totalLength));
     const percentage = numberCompleted * 100/numberLesson;
+   
     
-    const handleCertificate = () => {
-        
-    }
-  
+    
+  //
   return (
     <div className="card mb-3 mx-auto" style={{maxWidth: 900}}>
         <div className="row g-0">
             <div className="col-md-4 d-flex justify-content-center flex-column">
-                <img src={course.imageLink} className="img-fluid rounded-start" alt="course image" />
+                <img src={course.imageLink} className="rounded-start course-img" alt="course image" />
             </div>
             <div className="col-md-8">
                 <div className="card-body">
@@ -47,8 +46,8 @@ function StudentCourseCard({course}) {
                     
                    
                     <div className='d-flex w-75 justify-content-between mx-auto my-3'>
-                        <button className='btn btn-success' onClick={()=>navigate(`/study/${course.id}`)}> Go To Course</button>
-                        <button className='btn' style={{ color: "white",backgroundColor: "purple"}} disabled={percentage !== 100}>Get certificate</button>
+                        <button className='btn btn-success align-self-start' onClick={()=>navigate(`/study/${course.id}`)}> Go To Course</button>
+                        <CertificateButton courseId={course.id} percentage={percentage}/>
                     </div>
 
                 </div>

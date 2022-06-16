@@ -61,6 +61,11 @@
   margin-left: 100px;
 }
 
+.course-img {
+  max-width: 200px;
+  margin-left: 10px;
+}
+
 /* Dropdown Menu*/
 .menu-container {
   position: relative;
@@ -273,4 +278,9 @@
   position: absolute;
   margin-right: 1rem;
   border-radius: 10px;
+}
+
+.swap-list:hover {
+  color: white;
+  background-color:#084298;
 }

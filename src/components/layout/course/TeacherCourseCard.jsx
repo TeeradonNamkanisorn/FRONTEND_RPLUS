@@ -42,7 +42,7 @@ function TeacherCourseCard({ course }) {
               </small>
             </p>
             <p className="card-text">{HM}</p>
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center my-2">
               <div className="d-flex align-items-center justify-content-between ">
                 <p className="my-0">Level:</p>
                 <div className="mx-5">{course.level}</div>
@@ -55,6 +55,13 @@ function TeacherCourseCard({ course }) {
             
             <span className="text-center">Number of Students: <strong>{course.students.length}</strong></span>
             </div>
+            <span className="text-left d-block my-4">Status: 
+            {course.isPublished? (
+              <span className="text-primary mx-3">{"Published"}</span>
+            ) : (
+              <span className="text-warning mx-3">{"Not published"}</span>
+            )}
+            </span>
           </div>
           <div className="d-flex w-75 justify-content-between mx-auto my-3">
             <button

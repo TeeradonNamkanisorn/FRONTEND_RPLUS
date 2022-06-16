@@ -11,12 +11,12 @@ const styleClasses = {
   }
 }
 
-function ChapterEditContainer({chapters, fetchChapters}) {
+function ChapterEditContainer({chapters}) {
 
   return (
 <div className="accordion" id="accordionExample">
   {chapters.map(chapter => (
-    <ChapterAccordionItem  chapter={chapter} fetchChapters={fetchChapters} key={chapter.id}/>
+    <ChapterAccordionItem  chapter={chapter} chapters={chapters} key={chapter.id}/>
   ))}
   
 </div>

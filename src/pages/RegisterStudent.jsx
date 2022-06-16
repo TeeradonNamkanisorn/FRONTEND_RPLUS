@@ -1,7 +1,8 @@
 import axios from "axios";
-import {useEffect, useState, useReducer, useContext} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { isEmail } from "../utils/validateFunctions";
+import { isEmail, isEmpty } from "../utils/validateFunctions";
+import { isValidPassword } from "../utils/validateFunctions";
 export default function RegisterStudent() {
     const navigate = useNavigate();
     const [firstNameError, setFirstNameError] = useState("");
@@ -18,11 +19,29 @@ export default function RegisterStudent() {
 
 
     const handlePasswordChange = (e) => {
+       
         setPassword(e.target.value);
+        
+        if (!isValidPassword(e.target.value)) {
+            console.log("incorrect pattern")
+            return setPasswordError("The password pattern must be the following: minimum eight characters, at least one letter, one number and one special character");
+            
+        }
+        if (e.target.value !== confirmPassword) {
+            console.log("not match")
+            return setPasswordError("Passwords must me the same.")
+        }
+        console.log("fine")
+        setPasswordError("")
     }
 
     const handleConfirmPasswordChange = (e) => {
         setConfrimPassword(e.target.value);
+        if (e.target.value !== password) {
+            return setPasswordError("Passwords must be the same");
+        }
+
+        return setPasswordError("")
     }
 
     const handleUsernameChange = (e) => {
@@ -51,6 +70,10 @@ export default function RegisterStudent() {
         //POST request
 
        try {
+
+        if (isEmpty(password)) {
+            return setPasswordError("password cannot be empty")
+        }
         if (passwordError || emailError || usernameError || firstNameError || lastNameError) {
             return alert("invalid input");
         }
@@ -71,15 +94,8 @@ export default function RegisterStudent() {
 
         
     }
-
-    useEffect( () => {
-        if (password !== confirmPassword) {
-            setPasswordError("Passwords must be the same.")
-        } else {
-            setPasswordError("");
-        }
-    }, [password, confirmPassword])
-
+    
+    
   return (
     <div className="container w-75">
         <h1>Sign up for free as student</h1>

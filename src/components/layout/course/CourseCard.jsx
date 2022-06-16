@@ -18,7 +18,7 @@ function CourseCard({ course }) {
     imageLink,
   } = course;
   const isInCart = Boolean(useSelector((state) => state.cart.cart[course.id]));
-  const HM = secondsToHm(Math.floor(course.totalLength));
+  const HM = secondsToHm(Math.ceil(course.totalLength));
   //June 6, 2022
   const updatedDate = genJPDate(course.updatedAt);
   const createdDate = genJPDate(course.createdAt);

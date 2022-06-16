@@ -1,17 +1,10 @@
 import {
-  Routes,
-  Route,
   Link,
-  Outlet,
-  Navigate,
   useNavigate,
 } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { initUser, logout } from "./slices/userInfoSlice";
-import { getAccessToken } from "./services/localStorage";
-import axios from "./config/axios";
 import UserMenu from "./components/layout/header/UserMenu";
 import WebRouter from "./routes/WebRouter";
 import Spinner from "./components/common/Spinner";
@@ -28,7 +21,8 @@ function App() {
   const userLoading = useSelector((state) => state.userInfo.isLoading);
   const manyCourseLoading = useSelector((state) => state.manyCourses.isLoading);
   const courseError = useSelector(state=>state.course.error);
-  const userError = useSelector(state => state.manyCourses.error)
+  const manyCourseError = useSelector(state => state.manyCourses.error)
+  const userError = useSelector(state => state.userInfo.error);
   const cart = useSelector((state) => state.cart.cart);
   const itemNumber = Object.keys(cart).length;
   const role = useSelector((state) => state.userInfo.info.role);
@@ -65,7 +59,7 @@ function App() {
           </div>
           <div className="col-3">
             <UserMenu className="text-center" />
-            <Link to="/edit-user/:userId">Update Profile</Link>
+            <Link to="/edit-user/">Update Profile</Link>
             <Link to="/login" className="text-center">
               Login
             </Link>
@@ -79,6 +73,7 @@ function App() {
         <Spinner title="Please wait for the course content to load"></Spinner>
       )}
       {courseError && <Toast error={courseError}/>}
+      {manyCourseError && <Toast error={manyCourseError}/>}
       {userError && <Toast error={userError}/>}
     </>
   );

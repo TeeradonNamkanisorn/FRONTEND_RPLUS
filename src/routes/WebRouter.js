@@ -22,6 +22,7 @@ import CourseCreator from "../pages/teacher/CourseCreator";
 import StudentHome from "../pages/student/StudentHome";
 import StudyRoom from "../pages/student/StudyRoom";
 import LessonView from "../components/layout/study/LessonView";
+import StudentProfileUpdater from "../pages/student/StudentProfileUpdater";
 
 function WebRouter() {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ function WebRouter() {
         <Route path=":chapterId/:lessonId" element={<LessonView />} />
         <Route path="*" element={<>home</>} />
       </Route>
+      <Route path="/edit-user" element={<StudentProfileUpdater/>}/>
       <Route path="*" element={<Navigate to="/" />}></Route>
     </Routes>
   );

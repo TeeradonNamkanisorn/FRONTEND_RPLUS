@@ -7,9 +7,10 @@ import axios from "../../../../config/axios";
 import { fetchCourseAsync, setCourseError, setCourseLoading } from '../../../../slices/courseSlice';
 import { fetchAllCourseAsync } from '../../../../slices/manyCourseSlice';
 
-function ChapterAccordionItem({ chapter}) {
+function ChapterAccordionItem({ chapter , chapters}) {
   const [deleteModalShowing, setDeleteModalShowing] = useState(false);
   const {id: courseId} = useSelector(state => state.course);
+  const [swapModalShowing, setSwapModalShowing] = useState(false);
   
   const dispatch = useDispatch();
     const {lessons = []} = chapter;
@@ -35,6 +36,32 @@ function ChapterAccordionItem({ chapter}) {
     }
   }
 
+  const handleSwapClick = async ({id1,index1,id2,index2}) => {
+    try {
+      dispatch(setCourseLoading(true));
+      dispatch(setCourseError(""));
+    const requestBody = {
+      inputChapters: [
+        {
+          id: id1,
+          index: index1
+        },
+        {
+          id: id2,
+          index: index2
+        }
+      ]
+    }
+    await axios.patch('/chapter/swapIndex', requestBody);
+    dispatch(fetchCourseAsync({courseId}));
+    } catch (err) {
+      dispatch(setCourseError(err.response?.data?.message || err.message || "request error please try again later"))
+    } finally {
+      dispatch(setCourseLoading(false));
+      dispatch(setCourseError(""));
+    }
+  }
+
   return (
     <>
       <div className="accordion-item">
@@ -52,19 +79,23 @@ function ChapterAccordionItem({ chapter}) {
           <div className='row'>
             <p className='chapter-acc-description col-10'>{chapter?.description}
             
-            <button className='btn me-2 display-block btn-info ms-3'>
-                <i className='fa fa-edit'></i>
-            </button>
+        
             </p>
             
             <div className='col-2 offset-0 d-flex justify-content-end align-items-start'>
-              <button className='btn btn-danger me-2 flex-grow-0' onClick={()=>setDeleteModalShowing(true)}>
+            <button className='btn me-2 display-block btn-info mx-2'>
+                <i className='fa fa-edit'></i>
+            </button>
+              <button className='btn btn-success mx-2' onClick={() => setSwapModalShowing(true)}>
+                <i className="fa-solid fa-arrows-rotate"></i>
+              </button>
+              <button className='btn btn-danger mx-2 flex-grow-0' onClick={()=>setDeleteModalShowing(true)}>
                 <i className='fa fa-trash-can'></i>
               </button>
               
             </div>
           </div>
-          <ul className='list-group'>
+          <ul className='list-group mt-3'>
           {lessons.map(lesson => (
             <LessonItem key={lesson.id} lesson={lesson}/>
           ))}
@@ -91,6 +122,26 @@ function ChapterAccordionItem({ chapter}) {
             Cancel
           </button>
         </div>
+    </Modal>
+    <Modal showing={swapModalShowing} setShowing={setSwapModalShowing} size="lg">
+      <h5 className='my-2'>Select a chapter to swap with chapter #{chapter.chapterIndex}: {chapter.name}</h5>
+      <ul className='list-group my-4'>
+      {chapters.filter(chap => chap.id !== chapter.id).map(swapChap => (
+        <li className='list-group-item swap-list' key={swapChap.id} role="button"
+        onClick={() => {
+          handleSwapClick({
+            id1: chapter.id,
+            index1: chapter.chapterIndex,
+            id2: swapChap.id,
+            index2: swapChap.chapterIndex
+          })
+        }}>
+          {swapChap.chapterIndex + '. '+ swapChap.name}
+        </li>
+      ))
+      
+    } 
+    </ul>
     </Modal>
   </>
   )
