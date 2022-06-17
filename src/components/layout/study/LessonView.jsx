@@ -83,7 +83,7 @@ function LessonView() {
             </div>
         </Modal>
         
-        {/* {error && <Toast error={error}/>} */}
+        
         </div>
     </div>
   )} else {

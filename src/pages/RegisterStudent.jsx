@@ -1,10 +1,13 @@
 import axios from "axios";
 import {useEffect, useLayoutEffect, useState} from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setUserError } from "../slices/userInfoSlice";
 import { isEmail, isEmpty } from "../utils/validateFunctions";
 import { isValidPassword } from "../utils/validateFunctions";
 export default function RegisterStudent() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [firstNameError, setFirstNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
     const [usernameError, setUsernameError] = useState("");
@@ -90,6 +93,7 @@ export default function RegisterStudent() {
         navigate('/');
        } catch(err) {
            console.log(err?.response?.data?.message || err);
+           dispatch(setUserError(err?.reponse?.data?.message || err.message || "request error, please try again later"))
        }
 
         

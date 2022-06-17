@@ -71,10 +71,7 @@ function WebRouter() {
       localStorage.clear();
     }
 
-    const token = getAccessToken();
-    axios
-      .get("/auth/", { headers: { authorization: "Bearer " + token } })
-      .catch((err) => console.log(err));
+    
   }, [dispatch]);
 
   if (role === "student") {

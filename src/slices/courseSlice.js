@@ -104,7 +104,6 @@ const courseSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     setLoading: (state, action) => {
-      console.log(action.payload);
       state.isLoading = action.payload;
     },
     setError: (state, action) => {

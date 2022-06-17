@@ -285,7 +285,7 @@ export default function RegisterTeacher() {
           </div>
         </form>
       </div>
-      <Toast error={userError} />
+      {/* <Toast error={userError} /> */}
     </div>
   );
 }

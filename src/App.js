@@ -26,7 +26,8 @@ function App() {
   const cart = useSelector((state) => state.cart.cart);
   const itemNumber = Object.keys(cart).length;
   const role = useSelector((state) => state.userInfo.info.role);
-
+  
+  console.log(courseError)
   const handleLogoutClick = () => {
     dispatch(logout());
     dispatch(clearCart());

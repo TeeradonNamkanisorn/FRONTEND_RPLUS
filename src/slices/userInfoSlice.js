@@ -37,9 +37,8 @@ const loginUser = createAsyncThunk("userInfo/login", async (body, {rejectWithVal
     //body = {email, password}
         try {
             const res = await axios.post("/auth/login", {email: body.email, password: body.password});
-            const {username, userId, email, token, role} = res.data
-            saveAccessToken(token);
-        return {username, userId, email, role};
+            saveAccessToken(res.data.token);
+        return res.data;
         } catch (error) {
             console.log(error)
             return rejectWithValue(error?.response?.data?.message || "request error")

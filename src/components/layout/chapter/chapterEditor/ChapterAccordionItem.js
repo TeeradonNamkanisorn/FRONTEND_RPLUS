@@ -59,6 +59,7 @@ function ChapterAccordionItem({ chapter , chapters}) {
     } finally {
       dispatch(setCourseLoading(false));
       dispatch(setCourseError(""));
+      setSwapModalShowing(false);
     }
   }
 
@@ -97,7 +98,7 @@ function ChapterAccordionItem({ chapter , chapters}) {
           </div>
           <ul className='list-group mt-3'>
           {lessons.map(lesson => (
-            <LessonItem key={lesson.id} lesson={lesson}/>
+            <LessonItem key={lesson.id} lesson={lesson} lessons={lessons}/>
           ))}
           </ul>
           <Link to={`/modify-course/${chapter.courseId}/modify-chapter/${chapter.id}/create-new-lesson`}>

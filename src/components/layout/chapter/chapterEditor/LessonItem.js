@@ -3,13 +3,17 @@ import Modal from '../../../ui/Modal';
 import axios from "../../../../config/axios";
 import { getAccessToken } from '../../../../services/localStorage';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchCourseAsync, setCourseLoading } from '../../../../slices/courseSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCourseAsync, setCourseError, setCourseLoading } from '../../../../slices/courseSlice';
 import LessonUpdater from '../../lesson/LessonUpdater';
+import Toast from '../../../common/Toast';
 
-function LessonItem({lesson}) {
+
+function LessonItem({lesson, lessons}) {
    const [modalShowing, setModalShowing] = useState(false);
+   const error = useSelector(state => state.course.error);
    const [editModalShowing, setEditModalShowing] = useState(false);
+   const [swapModalShowing, setSwapModalShowing] = useState(false);
    const navigate = useNavigate();
    const { courseId } = useParams();
    const dispatch = useDispatch();
@@ -24,10 +28,38 @@ function LessonItem({lesson}) {
         dispatch(fetchCourseAsync({courseId}));
        } catch (err) {
            console.log(err);
+           dispatch(setCourseError(err.response?.data?.message || err.message || "request error please try again later."))
        } finally {
         dispatch(setCourseLoading(false))
        }
 
+   }
+
+   const handleSwapLesson = async ({id1,index1,id2,index2}) => {
+       try {
+        setSwapModalShowing(false);
+        dispatch(setCourseLoading(true))
+        dispatch(setCourseError(""));
+        const requestBody = {
+            inputLessons: [
+              {
+                id: id1,
+                index: index1
+              },
+              {
+                id: id2,
+                index: index2
+              }
+            ]
+          }
+        await axios.patch('/lesson/swapIndex', requestBody);
+        await dispatch(fetchCourseAsync({courseId}))
+       } catch (err) {
+        dispatch(setCourseError(err.response?.data?.message || err.message || "request error please try again later."))
+       } finally {
+           dispatch(setCourseLoading(false));
+           
+       }
    }
 
    
@@ -40,8 +72,20 @@ function LessonItem({lesson}) {
             
             <div className="d-flex align-items-center" style={{width: "100px", height: 40}}
             >
-            <i className="fa-solid fa-video fa-lg mx-3" role="button" onClick={()=> {handleModalToggle()}}></i>
-            <i className="fa-solid fa-trash-can fa-lg" role={"button"} onClick={handleDeleteVid}></i>
+            
+            <button className='btn' onClick={() => setSwapModalShowing(true)}>
+                <i className='fa-solid fa-arrows-rotate'></i>
+            </button>
+
+            <button className="btn" onClick={() => handleModalToggle()}>
+                <i className="fa-solid fa-video"></i>
+            </button>
+
+            <button  className='btn' onClick={handleDeleteVid}>
+                <i className="fa-solid fa-trash-can " role={"button"}></i>
+            </button>
+
+
             </div>
         </li>
         <Modal showing={modalShowing} setShowing={setModalShowing} size="lg" title={lesson?.title}>
@@ -53,6 +97,28 @@ function LessonItem({lesson}) {
         <Modal showing={editModalShowing} setShowing={setEditModalShowing} size="lg" title={"Lesson Edit"}>
             <LessonUpdater lesson={lesson} courseId={courseId} setShowing={setEditModalShowing}/>
         </Modal>
+
+        <Modal showing={swapModalShowing} setShowing={setSwapModalShowing} size="lg">
+        <h5 className='my-2'>Select a lesson to swap with lesson #{lesson.lessonIndex}: {lesson.title}</h5>
+        <ul className='list-group my-4'>
+        {lessons.filter(less => less.id !== lesson.id).map(swapLess => (
+            <li className='list-group-item swap-list' key={swapLess.id} role="button"
+            onClick={() => {
+            handleSwapLesson({
+                id1: lesson.id,
+                index1: lesson.lessonIndex,
+                id2: swapLess.id,
+                index2: swapLess.lessonIndex
+            })
+            }}>
+            {swapLess.lessonIndex + '. '+ swapLess.title}
+            </li>
+        ))
+        
+        } 
+        </ul>
+        </Modal>
+        
     </>
   )
 }

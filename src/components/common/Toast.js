@@ -19,7 +19,7 @@ const Toast = ({error}) => {
     }, [error, myToast]); 
 
   return (
-    <div className="toast-container position-absolute p-3 start-50 bottom-0 translate-middle-x" style={{zIndex: 2000}}>
+    <div className="toast-container position-absolute p-3 start-50 bottom-0 translate-middle-x position-fixed" style={{zIndex: 5000}}>
           <div className="toast align-items-center text-white bg-danger border-0" ref={ref}>
             <div className="d-flex">
               <div className="toast-body">{error}</div>

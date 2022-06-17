@@ -4,7 +4,7 @@ import bytesToSize from '../../../utils/bytesToSize';
 import DragAndDrop from '../../teacherUserInterfaces/DragAndDrop';
 import { useNavigate, useParams } from "react-router-dom";
 import { getAccessToken } from "../../../services/localStorage";
-import { setCourseLoading } from "../../../slices/courseSlice";
+import { setCourseError, setCourseLoading } from "../../../slices/courseSlice";
 import { useDispatch } from "react-redux";
 
 function CreateLessonForm() {
@@ -37,6 +37,7 @@ function CreateLessonForm() {
 
         } catch (err) {
             console.log(err)
+            dispatch(setCourseError(err?.response?.data?.message || err.message || "requestError"))
         } finally {
             dispatch(setCourseLoading(false));
         }
