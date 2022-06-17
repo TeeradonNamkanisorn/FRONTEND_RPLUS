@@ -60,6 +60,7 @@ function App() {
           </div>
           <div className="col-3">
             <UserMenu className="text-center" />
+            <Link to="/transactions">View Transactions</Link>
             <Link to="/edit-user/">Update Profile</Link>
             <Link to="/login" className="text-center">
               Login

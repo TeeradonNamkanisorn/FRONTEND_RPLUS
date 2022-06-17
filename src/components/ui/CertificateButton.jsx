@@ -48,7 +48,7 @@ function CertificateButton({courseId, percentage}) {
     <div style={{maxWidth: 200}}>
     <button className='btn' style={{ color: "white",backgroundColor: "purple"}} 
     onClick={handleCheckCertificate}>Request for certficate</button>
-    {(status === "JUST_COMPLETED") && <button className='btn btn-primary mt-3'>Download Certificate</button>}
+    {(status === "JUST_COMPLETED") && <button className='btn btn-primary mt-3' onClick={handleDownloadCert}>Download Certificate</button>}
     {(status === "PREVIOUSLY_COMPLETED") && (
     <>
         <button className='btn btn-primary' onClick={handleDownloadCert}>Download Old Certificate</button>

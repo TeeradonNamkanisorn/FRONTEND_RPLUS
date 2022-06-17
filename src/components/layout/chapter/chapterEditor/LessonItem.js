@@ -21,6 +21,8 @@ function LessonItem({lesson, lessons}) {
        setModalShowing(prev => !prev);
    }
 
+   
+
    const handleDeleteVid = async e => {
        try {
         dispatch(setCourseLoading(true));

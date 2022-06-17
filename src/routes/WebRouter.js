@@ -23,6 +23,8 @@ import StudentHome from "../pages/student/StudentHome";
 import StudyRoom from "../pages/student/StudyRoom";
 import LessonView from "../components/layout/study/LessonView";
 import StudentProfileUpdater from "../pages/student/StudentProfileUpdater";
+import StudentTransactions from "../pages/student/StudentTransactions";
+import TeacherTransactions from "../pages/teacher/TeacherTransactions";
 
 function WebRouter() {
   const dispatch = useDispatch();
@@ -42,6 +44,7 @@ function WebRouter() {
         path="/modify-course/:courseId/modify-chapter/:chapterId/create-new-lesson"
         element={<CreateLessonForm />}
       />
+      <Route path="/transactions" element={<TeacherTransactions/>}/>
 
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
@@ -58,6 +61,7 @@ function WebRouter() {
         <Route path="*" element={<>home</>} />
       </Route>
       <Route path="/edit-user" element={<StudentProfileUpdater/>}/>
+      <Route path="/transactions" element={<StudentTransactions/>}/>
       <Route path="*" element={<Navigate to="/" />}></Route>
     </Routes>
   );

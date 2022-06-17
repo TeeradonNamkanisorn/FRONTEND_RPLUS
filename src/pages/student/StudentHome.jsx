@@ -10,7 +10,7 @@ function StudentHome() {
     const dispatch = useDispatch();
     const courses = useSelector(state => state.manyCourses.courses);
     const coursesError = useSelector(state => state.manyCourses.error);
-    console.log(courses);
+    
     useEffect(() => {
         dispatch(fetchOwnCoursesAsync());
     }, [dispatch])
