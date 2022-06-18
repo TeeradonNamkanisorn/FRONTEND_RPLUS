@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Toast from "../components/common/Toast";
 import bankCodes from "../services/bankCodes";
 import { setUserError, setUserLoading } from "../slices/userInfoSlice";
-import { isCreditCard, isEmail } from "../utils/validateFunctions";
+import { isEmail } from "../utils/validateFunctions";
 export default function RegisterTeacher() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function RegisterTeacher() {
   const [bankAccountError, setBankAccountError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [creditCardNameError, setCreditCardNameError] = useState("");
+  const [bankAccountNameError, setBankAccountNameError] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,7 +28,7 @@ export default function RegisterTeacher() {
   const [bankAccountName, setBankAccountName] = useState("");
   const [bankCode, setBankCode] = useState("");
 
-  console.log(Object.entries(bankCodes));
+ 
 
   //Soon-to-be-implemented clientside validations
   const handlePasswordChange = (e) => {
@@ -60,14 +60,13 @@ export default function RegisterTeacher() {
   };
 
   const handleBankAccountChange = (e) => {
-    //Validate Credit Card
-    console.log(isCreditCard(e.target.value))
-    if (!isCreditCard(e.target.value)) setBankAccountError("Incorrect credit card format.");
+    
+    
     setBankAccount(e.target.value);
     setBankAccountError("");
   };
 
-  const handleCreditCardNameChange = (e) => {
+  const handleBankAccountNameChange = (e) => {
     
       
     setBankAccountName(e.target.value);
@@ -221,13 +220,13 @@ export default function RegisterTeacher() {
           </div>
 
           <div className="form-group row my-3">
-            <label className="" htmlFor="creditCardInput">
-              Credit Card Number
+            <label className="" htmlFor="bankAccountInput">
+              Bank Account Number
             </label>
             <input
               className={`form-control ${bankAccountError ? "is-invalid" : ""}`}
               type="text"
-              id="creditCardInput"
+              id="bankAccountInput"
               placeholder="Enter Card Number"
               value={bankAccount}    onChange={handleBankAccountChange}
             />
@@ -236,19 +235,19 @@ export default function RegisterTeacher() {
 
           <div className="form-group row my-3">
             <label className="" htmlFor="ccNameInput">
-              Credit Card Name
+              Bank Account Name
             </label>
             <input
               className={`form-control ${
-                creditCardNameError ? "is-invalid" : ""
+                bankAccountNameError ? "is-invalid" : ""
               }`}
               type="text"
               id="ccNameInput"
               placeholder="Name on card"
               value={bankAccountName}
-              onChange={handleCreditCardNameChange}
+              onChange={handleBankAccountNameChange}
             />
-            <div className="invalid-feedback">{creditCardNameError}</div>
+            <div className="invalid-feedback">{bankAccountNameError}</div>
           </div>
 
           <div className="mb-5">
