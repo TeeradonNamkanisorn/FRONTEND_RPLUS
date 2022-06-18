@@ -16,6 +16,8 @@ function LessonUpdater({lesson, courseId, setShowing}) {
     const [titleError, setTitleError]= useState("");
     const dispatch = useDispatch();
 
+    console.log("asdfasd", courseId)
+
    
     const handleSubmit = async e => {
         e.preventDefault();

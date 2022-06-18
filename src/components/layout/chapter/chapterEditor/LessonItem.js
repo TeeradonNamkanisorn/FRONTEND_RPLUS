@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from '../../../ui/Modal';
 import axios from "../../../../config/axios";
 import { getAccessToken } from '../../../../services/localStorage';
@@ -14,6 +14,7 @@ function LessonItem({lesson, lessons}) {
    const error = useSelector(state => state.course.error);
    const [editModalShowing, setEditModalShowing] = useState(false);
    const [swapModalShowing, setSwapModalShowing] = useState(false);
+   const vidRef = useRef(null);
    const navigate = useNavigate();
    const { courseId } = useParams();
    const dispatch = useDispatch();
@@ -21,7 +22,12 @@ function LessonItem({lesson, lessons}) {
        setModalShowing(prev => !prev);
    }
 
-   
+   useEffect(() => {
+    if (vidRef.current !== null) {
+        vidRef.current.load();
+    }
+   }, [lesson])
+
 
    const handleDeleteVid = async e => {
        try {
@@ -91,7 +97,7 @@ function LessonItem({lesson, lessons}) {
             </div>
         </li>
         <Modal showing={modalShowing} setShowing={setModalShowing} size="lg" title={lesson?.title}>
-            <video width="500" height="500" controls>
+            <video width="500" height="500" controls ref={vidRef}>
                 <source src={lesson?.videoLesson?.url}/>
                 Your browser does not support the video tag.
             </video>

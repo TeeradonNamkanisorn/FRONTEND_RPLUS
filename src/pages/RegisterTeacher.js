@@ -14,7 +14,7 @@ export default function RegisterTeacher() {
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [usernameError, setUsernameError] = useState("");
-  const [creditCardError, setCreditCardError] = useState("");
+  const [bankAccountError, setBankAccountError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [creditCardNameError, setCreditCardNameError] = useState("");
@@ -24,8 +24,8 @@ export default function RegisterTeacher() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfrimPassword] = useState("");
-  const [creditCard, setCreditCard] = useState("");
-  const [creditCardName, setCreditCardName] = useState("");
+  const [bankAccount, setBankAccount] = useState("");
+  const [bankAccountName, setBankAccountName] = useState("");
   const [bankCode, setBankCode] = useState("");
 
   console.log(Object.entries(bankCodes));
@@ -59,18 +59,18 @@ export default function RegisterTeacher() {
     setEmail(e.target.value);
   };
 
-  const handleCreditCardChange = (e) => {
+  const handleBankAccountChange = (e) => {
     //Validate Credit Card
     console.log(isCreditCard(e.target.value))
-    if (!isCreditCard(e.target.value)) setCreditCardError("Incorrect credit card format.");
-    setCreditCard(e.target.value);
-    setCreditCardError("");
+    if (!isCreditCard(e.target.value)) setBankAccountError("Incorrect credit card format.");
+    setBankAccount(e.target.value);
+    setBankAccountError("");
   };
 
   const handleCreditCardNameChange = (e) => {
     
       
-    setCreditCardName(e.target.value);
+    setBankAccountName(e.target.value);
   };
 
   const handleBankCodeChange = (e) => {
@@ -90,7 +90,7 @@ export default function RegisterTeacher() {
         firstNameError ||
         lastNameError ||
         bankCode === "" ||
-        creditCardError
+        bankAccountError
       ) {
         return alert("invalid input");
       }
@@ -103,8 +103,8 @@ export default function RegisterTeacher() {
         password,
         firstName,
         lastName,
-        creditCardNumber: creditCard,
-        creditCardName,
+        bankAccountNumber: bankAccount,
+        bankAccountName,
         bankCode,
       };
 
@@ -225,14 +225,13 @@ export default function RegisterTeacher() {
               Credit Card Number
             </label>
             <input
-              className={`form-control ${creditCardError ? "is-invalid" : ""}`}
+              className={`form-control ${bankAccountError ? "is-invalid" : ""}`}
               type="text"
               id="creditCardInput"
               placeholder="Enter Card Number"
-              value={creditCard}
-              onChange={handleCreditCardChange}
+              value={bankAccount}    onChange={handleBankAccountChange}
             />
-            <div className="invalid-feedback">{creditCardError}</div>
+            <div className="invalid-feedback">{bankAccountError}</div>
           </div>
 
           <div className="form-group row my-3">
@@ -246,7 +245,7 @@ export default function RegisterTeacher() {
               type="text"
               id="ccNameInput"
               placeholder="Name on card"
-              value={creditCardName}
+              value={bankAccountName}
               onChange={handleCreditCardNameChange}
             />
             <div className="invalid-feedback">{creditCardNameError}</div>
@@ -259,7 +258,7 @@ export default function RegisterTeacher() {
               onChange={handleBankCodeChange}
               required
             >
-              <option value={""}>Select Your Bank On Credit Card</option>
+              <option value={""}>Select Your Bank</option>
               {Object.entries(bankCodes).map((el) => (
                 <option value={el[0]} key={el[0]}>
                   {el[1]}

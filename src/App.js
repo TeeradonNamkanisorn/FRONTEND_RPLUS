@@ -13,6 +13,7 @@ import SearchBar from "./components/layout/header/SearchBar";
 import { clearAllCourses } from "./slices/manyCourseSlice";
 import { clearCourse } from "./slices/courseSlice";
 import Toast from "./components/common/Toast";
+import UserDropDown from "./components/layout/header/UserDropDown";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,13 +29,7 @@ function App() {
   const role = useSelector((state) => state.userInfo.info.role);
   
   console.log(courseError)
-  const handleLogoutClick = () => {
-    dispatch(logout());
-    dispatch(clearCart());
-    dispatch(clearCourse());
-    dispatch(clearAllCourses());
-    navigate("/");
-  };
+  
 
   return (
     <>
@@ -59,13 +54,12 @@ function App() {
             )}
           </div>
           <div className="col-3">
-            <UserMenu className="text-center" />
+            {/* <UserMenu className="text-center" />
             <Link to="/transactions">View Transactions</Link>
             <Link to="/edit-user/">Update Profile</Link>
-            <Link to="/login" className="text-center">
-              Login
-            </Link>
-            <button onClick={handleLogoutClick}> Logout </button>
+            <Link to="/login" className="text-center">Login</Link>
+            <button onClick={handleLogoutClick}> Logout </button> */}
+            <UserDropDown/>
           </div>
         </div>
         <WebRouter />

@@ -66,6 +66,16 @@ function WebRouter() {
     </Routes>
   );
 
+  const commonRoutes = (
+    <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterSelect />}></Route>
+        <Route path="/register-teacher" element={<RegisterTeacher />}></Route>
+        <Route path="/register-student" element={<RegisterStudent />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+  )
+
   useEffect(() => {
     try {
       if (getAccessToken()) {
@@ -90,16 +100,7 @@ function WebRouter() {
       </Routes>
     );
   } else {
-    console.log("guest");
-    return (
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterSelect />}></Route>
-        <Route path="/register-teacher" element={<RegisterTeacher />}></Route>
-        <Route path="/register-student" element={<RegisterStudent />} />
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
-    );
+    return commonRoutes
   }
 }
 

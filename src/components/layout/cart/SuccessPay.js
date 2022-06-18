@@ -17,4 +17,5 @@ function SuccessPay() {
   )
 }
 
+
 export default SuccessPay
